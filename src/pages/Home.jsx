@@ -2,11 +2,9 @@ import { IonAlert, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTit
 import { heartOutline } from 'ionicons/icons'
 import Cat from '../assets/cat.jpg'
 
-
-
 const Alert = () => {
 	return (
-		<div style={{ display: 'inline-block', float: 'right' }}>
+		<div style={{ float: 'right' }}>
 			<IonButton id="present-alert" color="danger" expand="size">
 				<IonIcon icon={heartOutline}></IonIcon>
 			</IonButton>
@@ -41,7 +39,7 @@ export const Home = () => {
 		<IonCard>
 			<img src={Cat} alt="Cat" width={'100%'} />
 			<IonCardHeader>
-				<IonCardTitle>
+				<IonCardTitle class="ion-margin-top">
 					Pet Name
 					<Alert></Alert>
 				</IonCardTitle>

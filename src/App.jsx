@@ -19,6 +19,7 @@ import '@ionic/react/css/text-transformation.css'
 
 /* Theme variables */
 import Home from './pages/Home'
+import Login from './pages/Login'
 import './theme/variables.css'
 
 setupIonicReact()
@@ -28,7 +29,11 @@ const App = () => (
 		<IonReactRouter>
 			<IonRouterOutlet>
 				<Route exact path="/home">
-					<Home title="Hello World" />
+					<Home />
+				</Route>
+
+				<Route exact path="/login">
+					<Login />
 				</Route>
 				<Route exact path="/">
 					<Redirect to="/home" />

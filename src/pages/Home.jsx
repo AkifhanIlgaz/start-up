@@ -1,59 +1,20 @@
-import { IonAlert, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonIcon } from '@ionic/react'
-import { heartOutline } from 'ionicons/icons'
-import Cat from '../assets/cat.jpg'
+import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonPage, IonRow } from '@ionic/react'
+import React from 'react'
 
-const Alert = () => {
+const Home = () => {
 	return (
-		<div style={{ float: 'right' }}>
-			<IonButton id="present-alert" color="danger" expand="size">
-				<IonIcon icon={heartOutline}></IonIcon>
-			</IonButton>
-
-			<IonAlert
-				header="Like"
-				trigger="present-alert"
-				buttons={[
-					{
-						text: 'Cancel',
-						role: 'cancel',
-						handler: () => {
-							setHandlerMessage('Alert canceled')
-						}
-					},
-					{
-						text: 'OK',
-						role: 'confirm',
-						handler: () => {
-							setHandlerMessage('Alert confirmed')
-						}
-					}
-				]}
-				onDidDismiss={({ detail }) => setRoleMessage(`Dismissed with role: ${detail.role}`)}
-			></IonAlert>
-		</div>
-	)
-}
-
-export const Home = () => {
-	return (
-		<IonCard>
-			<img src={Cat} alt="Cat" width={'100%'} />
-			<IonCardHeader>
-				<IonCardTitle class="ion-margin-top">
-					Pet Name
-					<Alert></Alert>
-				</IonCardTitle>
-			</IonCardHeader>
-
-			<IonCardContent>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit obcaecati repudiandae excepturi, vero nihil totam?</IonCardContent>
-			<div align="center" className="ion-padding-bottom">
-				<IonChip color="secondary">Cat</IonChip>
-				<IonChip color="secondary">Cat</IonChip>
-				<IonChip color="secondary">Cat</IonChip>
-				<IonChip color="secondary">Cat</IonChip>
-				<IonChip color="secondary">Cat</IonChip>
-			</div>
-		</IonCard>
+		<IonPage>
+			<IonContent>
+				<IonGrid>
+					<IonRow>
+						<IonCol>
+							<IonInput></IonInput>
+							<IonButton onClick={() => console.log('Clicked')}>Click me</IonButton>
+						</IonCol>
+					</IonRow>
+				</IonGrid>
+			</IonContent>
+		</IonPage>
 	)
 }
 

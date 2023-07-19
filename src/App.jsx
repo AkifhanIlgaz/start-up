@@ -1,6 +1,6 @@
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { Redirect, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
 
@@ -33,14 +33,11 @@ const App = () => {
 			<IntlProvider locale={locale.code} messages={locale.messages} onError={error => error.code === 'MISSING_TRANSLATION'} defaultLocale="tr">
 				<IonReactRouter>
 					<IonRouterOutlet>
-						<Route exact path="/home">
-							<Home />
-						</Route>
-						<Route exact path="/login">
+						<Route exact path="/">
 							<Login />
 						</Route>
-						<Route exact path="/">
-							<Redirect to="/home" />
+						<Route exact path="/home">
+							<Home />
 						</Route>
 					</IonRouterOutlet>
 				</IonReactRouter>

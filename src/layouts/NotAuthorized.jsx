@@ -1,5 +1,4 @@
 import { IonCard, IonCol, IonContent, IonGrid, IonPage, IonRow } from '@ionic/react'
-import React from 'react'
 
 export const NotAuthorized = ({ onSubmit, children }) => {
 	return (
@@ -7,8 +6,8 @@ export const NotAuthorized = ({ onSubmit, children }) => {
 			<IonContent color="tertiary" className="ion-padding" scrollY={false}>
 				<form onSubmit={onSubmit}>
 					<IonGrid className="ion-align-items-center ion-justify-content-center ion-height">
-						<IonRow class="ion-align-items-center ion-justify-content-center ion-height">
-							<IonCol size="12" sizeMd="6" sizeLg="4">
+						<IonRow className="ion-align-items-center ion-justify-content-center ion-height">
+							<IonCol size="12" size-md="6" size-lg="4">
 								<IonCard className="auth-card ion-transparent">{children}</IonCard>
 							</IonCol>
 						</IonRow>

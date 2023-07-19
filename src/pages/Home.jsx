@@ -1,8 +1,11 @@
-import React from 'react'
-import Authorized from '../layout/Authorized'
+import { useRecoilState } from 'recoil'
+import { userState } from '../atoms/user'
+import Authorized from '../layouts/Authorized'
 
 export const Home = () => {
-	return <Authorized></Authorized>
+	const [user, setUser] = useRecoilState(userState)
+
+	return <Authorized>HOŞ GELDİNİZ : {user.name}</Authorized>
 }
 
 export default Home

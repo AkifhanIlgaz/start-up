@@ -13,27 +13,152 @@ const firebaseConfig = {
 	appId: '1:529698577815:web:d0716481ea7d6ce4d638d2',
 	measurementId: 'G-XPE4G2V6NR'
 }
+
 firebase.initializeApp(firebaseConfig)
 
-class Request {
+class Http {
 	constructor() {
 		this.auth = firebase.auth()
 		this.firestore = firebase.firestore()
 		this.storage = firebase.storage()
 	}
 
-	async signUpWithEmail(email, password, userData) {
+	async checkUserExistsByPhone(phoneNumber) {
 		try {
-			const credential = firebase.auth.EmailAuthProvider.credential(email, password)
-			const userCredential = await this.auth.signInWithCredential(credential)
-			const user = userCredential.user
-			const userDocRef = this.firestore.collection('users').doc(user.uid)
-			await this.setDocument('users', user.uid, { id: user.uid, email: user.email, ...userData })
-			const userDocSnapshot = await userDocRef.get()
-			if (userDocSnapshot.exists) {
-				return { id: user.uid, ...userDocSnapshot.data() }
+			const userCredential = await this.auth.fetchSignInMethodsForPhoneNumber(phoneNumber)
+			return userCredential.length > 0
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async sendVerificationCode(phoneNumber) {
+		try {
+			const userExists = await this.checkUserExistsByPhone(phoneNumber)
+			if (userExists) {
+				const phoneAuthProvider = new firebase.auth.PhoneAuthProvider()
+				const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
+				const verificationId = await phoneAuthProvider.verifyPhoneNumber(phoneNumber, appVerifier)
+				return verificationId
 			} else {
 				return false
+			}
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async signUpWithPhone(verificationId, verificationCode, userData) {
+		try {
+			const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode)
+			const userCredential = await this.auth.signInWithPhoneNumber(phoneNumber, credential)
+			const user = userCredential.user
+			const userDocRef = this.firestore.collection('users').doc(user.uid)
+			const userDocSnapshot = await userDocRef.get()
+			userData = {
+				uid: user.uid,
+				createdAt: user.metadata.createdAt,
+				creationTime: user.metadata.creationTime,
+				lastLoginAt: user.metadata.lastLoginAt,
+				lastSignInTime: user.metadata.lastSignInTime,
+				displayName: user.displayName,
+				email: user.email,
+				phoneNumber: user.phoneNumber,
+				photoURL: user.photoURL,
+				providerId: user.providerId,
+				...userData
+			}
+			if (userDocSnapshot.exists) {
+				await this.setDocument('users', user.uid, {
+					...userDocSnapshot.data(),
+					...userData
+				})
+				return { ...userDocSnapshot.data(), ...userData }
+			} else {
+				await this.setDocument('users', user.uid, userData)
+				return userData
+			}
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async signInWithPhone(phoneNumber) {
+		try {
+			const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode)
+			const userCredential = await this.auth.signInWithPhoneNumber(phoneNumber, credential)
+			const user = userCredential.user
+			const userDocRef = this.firestore.collection('users').doc(user.uid)
+			const userDocSnapshot = await userDocRef.get()
+			const userData = {
+				uid: user.uid,
+				createdAt: user.metadata.createdAt,
+				creationTime: user.metadata.creationTime,
+				lastLoginAt: user.metadata.lastLoginAt,
+				lastSignInTime: user.metadata.lastSignInTime,
+				displayName: user.displayName,
+				email: user.email,
+				phoneNumber: user.phoneNumber,
+				photoURL: user.photoURL,
+				providerId: user.providerId
+			}
+			if (userDocSnapshot.exists) {
+				await this.setDocument('users', user.uid, {
+					...userDocSnapshot.data(),
+					...userData
+				})
+				return { ...userDocSnapshot.data(), ...userData }
+			} else {
+				await this.setDocument('users', user.uid, userData)
+				return userData
+			}
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async checkUserExistsByEMail(email) {
+		try {
+			const userCredential = await this.auth.fetchSignInMethodsForEmail(email)
+			return userCredential.length > 0
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async signUpWithEmail(email, password, userData) {
+		try {
+			const userExists = await this.checkUserExistsByEMail(email)
+			if (userExists) {
+				return false
+			} else {
+				const userCredential = await this.auth.createUserWithEmailAndPassword(email, password)
+				const user = userCredential.user
+				const userDocRef = this.firestore.collection('users').doc(user.uid)
+				const userDocSnapshot = await userDocRef.get()
+				userData = {
+					uid: user.uid,
+					createdAt: user.metadata.createdAt,
+					creationTime: user.metadata.creationTime,
+					lastLoginAt: user.metadata.lastLoginAt,
+					lastSignInTime: user.metadata.lastSignInTime,
+					displayName: user.displayName,
+					email: user.email,
+					phoneNumber: user.phoneNumber,
+					photoURL: user.photoURL,
+					providerId: user.providerId,
+					...userData
+				}
+				if (userDocSnapshot.exists) {
+					await this.setDocument('users', user.uid, {
+						...userDocSnapshot.data(),
+						...userData
+					})
+					return { ...userDocSnapshot.data(), ...userData }
+				} else {
+					await this.setDocument('users', user.uid, userData)
+					return userData
+				}
 			}
 		} catch (error) {
 			throw error
@@ -42,12 +167,34 @@ class Request {
 
 	async signInWithEmail(email, password) {
 		try {
-			const userCredential = await this.auth.signInWithEmailAndPassword(email, password)
-			const user = userCredential.user
-			const userDocRef = this.firestore.collection('users').doc(user.uid)
-			const userDocSnapshot = await userDocRef.get()
-			if (userDocSnapshot.exists) {
-				return { id: user.uid, ...userDocSnapshot.data() }
+			const userExists = await this.checkUserExistsByEMail(email)
+			if (userExists) {
+				const userCredential = await this.auth.signInWithEmailAndPassword(email, password)
+				const user = userCredential.user
+				const userDocRef = this.firestore.collection('users').doc(user.uid)
+				const userDocSnapshot = await userDocRef.get()
+				const userData = {
+					uid: user.uid,
+					createdAt: user.metadata.createdAt,
+					creationTime: user.metadata.creationTime,
+					lastLoginAt: user.metadata.lastLoginAt,
+					lastSignInTime: user.metadata.lastSignInTime,
+					displayName: user.displayName,
+					email: user.email,
+					phoneNumber: user.phoneNumber,
+					photoURL: user.photoURL,
+					providerId: user.providerId
+				}
+				if (userDocSnapshot.exists) {
+					await this.setDocument('users', user.uid, {
+						...userDocSnapshot.data(),
+						...userData
+					})
+					return { ...userDocSnapshot.data(), ...userData }
+				} else {
+					await this.setDocument('users', user.uid, userData)
+					return userData
+				}
 			} else {
 				return false
 			}
@@ -56,12 +203,14 @@ class Request {
 		}
 	}
 
-	async resetPasswordWithEmail(email, newPassword) {
+	async resetPasswordWithEmail(email) {
 		try {
-			const credential = firebase.auth.EmailAuthProvider.credential(email, newPassword)
-			const userCredential = await this.auth.signInWithCredential(credential)
-			const user = userCredential.user
-			await user.updatePassword(newPassword)
+			const userExists = await this.checkUserExistsByEMail(email)
+			if (userExists) {
+				await this.auth.sendPasswordResetEmail(email)
+			} else {
+				return false
+			}
 		} catch (error) {
 			throw error
 		}
@@ -152,4 +301,4 @@ class Request {
 	}
 }
 
-export default Request
+export default Http

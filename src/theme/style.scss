@@ -1,0 +1,27 @@
+* {
+	text-transform: none;
+	border-radius: 0 !important;
+}
+
+.auth-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.ion-height {
+	height: 100vh;
+}
+
+.ion-transparent {
+	box-shadow: none !important;
+}
+
+.ion-bold {
+	font-weight: bold;
+}
+
+.ion-input {
+	--background: var(--ion-color-light);
+}

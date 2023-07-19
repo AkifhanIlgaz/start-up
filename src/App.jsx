@@ -22,6 +22,7 @@ import { IntlProvider } from 'react-intl'
 import Locales from './lang'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import './theme/style.scss'
 import './theme/variables.css'
 setupIonicReact()
 
@@ -36,6 +37,7 @@ const App = () => {
 						<Route exact path="/">
 							<Login />
 						</Route>
+						<Route exact path="/home"></Route>
 						<Route exact path="/home">
 							<Home />
 						</Route>

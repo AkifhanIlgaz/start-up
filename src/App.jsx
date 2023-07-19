@@ -18,29 +18,34 @@ import '@ionic/react/css/text-alignment.css'
 import '@ionic/react/css/text-transformation.css'
 
 /* Theme variables */
+import { IntlProvider } from 'react-intl'
+import Locales from './lang'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import './theme/variables.css'
-
 setupIonicReact()
 
-const App = () => (
-	<IonApp>
-		<IonReactRouter>
-			<IonRouterOutlet>
-				<Route exact path="/home">
-					<Home />
-				</Route>
+const App = () => {
+	const locale = Locales['tr']
 
-				<Route exact path="/login">
-					<Login />
-				</Route>
-				<Route exact path="/">
-					<Redirect to="/home" />
-				</Route>
-			</IonRouterOutlet>
-		</IonReactRouter>
-	</IonApp>
-)
-
+	return (
+		<IonApp>
+			<IntlProvider locale={locale.code} messages={locale.messages} onError={error => error.code === 'MISSING_TRANSLATION'} defaultLocale="tr">
+				<IonReactRouter>
+					<IonRouterOutlet>
+						<Route exact path="/home">
+							<Home />
+						</Route>
+						<Route exact path="/login">
+							<Login />
+						</Route>
+						<Route exact path="/">
+							<Redirect to="/home" />
+						</Route>
+					</IonRouterOutlet>
+				</IonReactRouter>
+			</IntlProvider>
+		</IonApp>
+	)
+}
 export default App

@@ -1,7 +1,7 @@
 import { IonContent, IonPage } from '@ionic/react'
 import React from 'react'
 
-const Page = () => {
+const Home = () => {
 	return (
 		<IonPage>
 			<IonContent className="ion-padding">UI goes here...</IonContent>
@@ -9,4 +9,4 @@ const Page = () => {
 	)
 }
 
-export default Page
+export default Home

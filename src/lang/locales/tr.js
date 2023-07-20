@@ -4,7 +4,8 @@ export const messages = {
 	'Forgot your password?': 'Şifreni mi unuttun	?',
 	'Sign In': 'Giriş Yap',
 	'Sign Up': 'Kayıt Ol',
-	Send: 'Gönder'
+	Send: 'Gönder',
+	'Already have an account?': 'Zaten hesabın var mı?'
 }
 
 export default messages

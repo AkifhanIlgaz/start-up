@@ -3,12 +3,12 @@ import { IonCard, IonCol, IonContent, IonGrid, IonPage, IonRow } from '@ionic/re
 export const NotAuthorized = ({ onSubmit, children }) => {
 	return (
 		<IonPage>
-			<IonContent color="tertiary" scrollY={false}>
+			<IonContent color={'success'} scrollY={false}>
 				<form onSubmit={onSubmit}>
-					<IonGrid className="ion-align-items-center ion-justify-content-center ion-height">
+					<IonGrid className="ion-align-items-center ion-justify-content-center ion-height ">
 						<IonRow className="ion-align-items-center ion-justify-content-center ion-height">
 							<IonCol size="12" size-md="6" size-lg="4">
-								<IonCard className="auth-card ion-transparent">{children}</IonCard>
+								<IonCard className="ion-transparent">{children}</IonCard>
 							</IonCol>
 						</IonRow>
 					</IonGrid>

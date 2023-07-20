@@ -1,4 +1,5 @@
-import { IonButton, IonCardContent, IonCol, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
+import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
+import { logInOutline } from 'ionicons/icons'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -64,34 +65,39 @@ export const Login = () => {
 
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
-			<IonCardContent>
+			<IonCardContent className="card-content">
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput placeholder={formatMessage('E-Mail')} ariaLabel={formatMessage('E-Mail')} type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
+						<IonInput label={formatMessage('E-Mail')} type="email" labelPlacement="floating" className=" ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
 						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
 						{errors.email && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput fill="outline" label={formatMessage('Password')} type="password" placeholder="*****" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top" {...register('password', { required: true })} />
+						<IonInput label={formatMessage('Password')} type="password" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-top" {...register('password', { required: true })} />
 						{errors.password && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
-				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" shape="round">
-					<p>{formatMessage('Sign In')}</p>
+				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary">
+					<span className="button-text">{formatMessage('Sign In')}</span>
+					<IonIcon icon={logInOutline} slot="end"></IonIcon>
 				</IonButton>
 
-				<div className="ion-text-center ">
-					<a className="forgot-font" onClick={goPasswordReset} style={{ textDecoration: 'none', color: '-moz-initial' }}>
-						{formatMessage('Forgot your password ?')}
-					</a>
-				</div>
+				<IonRow>
+					<IonCol>
+						<a className="ion-float-left " onClick={goPasswordReset} style={{ textDecoration: 'none', color: '-moz-initial', fontSize: '12px' }}>
+							{formatMessage('Forgot your password ?')}
+						</a>
+						<a className="ion-float-right" onClick={goRegister} style={{ textDecoration: 'none', color: '-moz-initial', fontSize: '12px' }}>
+							{formatMessage('Already have an account?')}
+						</a>
+					</IonCol>
+				</IonRow>
 
-				<hr />
-				<IonButton expand="block" color="secondary" shape="round" onClick={() => goRegister()}>
-					<p>{formatMessage('Sign Up')}</p>
-				</IonButton>
+				{/* <IonButton expand="block" color="secondary" onClick={() => goRegister()}>
+					<span className="button-text">{formatMessage('Sign Up')}</span>
+				</IonButton> */}
 			</IonCardContent>
 		</NotAuthorized>
 	)

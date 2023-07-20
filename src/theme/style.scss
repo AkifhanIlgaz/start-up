@@ -25,10 +25,18 @@
 .ion-input {
 	background-color: #fff;
 	border: 1px solid #dddfe2;
-	color: #1d2129;
+	color: grey;
 	height: 22px;
 	line-height: 16px;
 	vertical-align: middle;
 	border-radius: 6px;
-	cursor: text;
+}
+
+.button-text {
+	font-weight: bold;
+}
+
+.card-content {
+	padding: 10px;
+	background-color: var(--ion-color-success);
 }

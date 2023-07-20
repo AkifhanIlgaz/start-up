@@ -210,7 +210,8 @@ class Request {
 
 	async uploadFile(storagePath, file) {
 		try {
-			const storageRef = this.storage.ref(storagePath)
+			let storageRef = this.storage.ref(storagePath)
+			storageRef = storageRef.child(file.name)
 			const snapshot = await storageRef.put(file)
 			const downloadURL = await snapshot.ref.getDownloadURL()
 			return downloadURL

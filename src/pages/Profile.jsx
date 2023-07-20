@@ -97,8 +97,6 @@ export const Profile = () => {
 							<IonLabel color="success">Yüklendi!</IonLabel>
 							<img src={downloadURL} alt="" style={{ width: '50px' }} />
 						</IonCol>
-
-
 					</IonRow>
 				)}
 			</IonCardContent>

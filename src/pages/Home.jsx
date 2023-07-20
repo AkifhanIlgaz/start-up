@@ -5,7 +5,7 @@ import Authorized from '../layouts/Authorized'
 export const Home = () => {
 	const [user, setUser] = useRecoilState(userState)
 
-	return <Authorized>HOŞ GELDİNİZ : {user.name}</Authorized>
+	return <Authorized>HOŞ GELDİNİZ : {user.email}</Authorized>
 }
 
 export default Home

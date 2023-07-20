@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
+import Request from '../api/request'
 import { userState } from '../atoms/user'
 import NotAuthorized from '../layouts/NotAuthorized'
 
@@ -34,13 +35,22 @@ export const Register = () => {
 	}
 
 	const onSubmit = async data => {
-		console.log(errors)
-		console.log(data)
-		alert(formatMessage('E-Mail'), data.email)
-		if (data.email === 'ubsefa@gmail.com') {
-			setUser({ name: 'Ümit Berkan Sefa' })
-			history.push('/home')
+		const fetchData = async () => {
+			try {
+				const req = new Request()
+				const res = await req.signUpWithEmail(data.email, data.password)
+				if (res === false) {
+					alert('HATA', 'already exists')
+					return
+				}
+				setUser(res)
+				history.push('/home')
+			} catch (error) {
+				alert('HATA', error.message)
+			}
 		}
+
+		fetchData()
 	}
 
 	const goLogin = () => {

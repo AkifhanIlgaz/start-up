@@ -22,6 +22,7 @@ import { IntlProvider } from 'react-intl'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
+import PasswordReset from './pages/PasswordReset'
 import Profile from './pages/Profile'
 import Register from './pages/Register'
 
@@ -48,6 +49,9 @@ const App = () => {
 					</Route>
 					<Route exact path="/profile">
 						<Profile />
+					</Route>
+					<Route exact path="/password-reset">
+						<PasswordReset />
 					</Route>
 				</IonReactRouter>
 			</IntlProvider>

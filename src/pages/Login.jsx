@@ -57,33 +57,41 @@ export const Login = () => {
 	const goRegister = () => {
 		history.push('/register')
 	}
+
+	const goPasswordReset = () => {
+		history.push('/password-reset')
+	}
+
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput label={formatMessage('E-Mail')} placeholder="johndoe@gmail.com" type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end" {...register('email', { required: true })}></IonInput>
+						<IonInput placeholder={formatMessage('E-Mail')} type="email" labelPlacement="fixed" className="ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
 						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
 						{errors.email && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput label={formatMessage('Password')} type="password" placeholder="*****" labelPlacement="floating" className="ion-padding-start ion-padding-end" {...register('password', { required: true })} />
+						<IonInput fill="outline" label={formatMessage('Password')} type="password" placeholder="*****" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top" {...register('password', { required: true })} />
 						{errors.password && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
 				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" shape="round">
 					<p>{formatMessage('Sign In')}</p>
 				</IonButton>
-				<IonButton expand="block" color="secondary" shape="round" onClick={() => goRegister()}>
-					<p>{formatMessage('Sign Up')}</p>
-				</IonButton>
+
 				<div className="ion-text-center ">
-					<a className="forgot-font" href="#" style={{ textDecoration: 'none', color: '-moz-initial' }}>
+					<a className="forgot-font" onClick={goPasswordReset} style={{ textDecoration: 'none', color: '-moz-initial' }}>
 						{formatMessage('Forgot your password ?')}
 					</a>
 				</div>
+
+				<hr />
+				<IonButton expand="block" color="secondary" shape="round" onClick={() => goRegister()}>
+					<p>{formatMessage('Sign Up')}</p>
+				</IonButton>
 			</IonCardContent>
 		</NotAuthorized>
 	)

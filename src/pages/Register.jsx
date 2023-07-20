@@ -60,29 +60,24 @@ export const Register = () => {
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent>
-				<IonLabel color="light" className="ion-bold">
-					{formatMessage('E-Mail')}
-				</IonLabel>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} />
+						<IonInput fill="outline" label={formatMessage('E-Mail')} placeholder="johndoe@gmail.com" type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end" {...register('email', { required: true })}></IonInput>
+						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
 						{errors.email && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
-				<IonLabel color="light" className="ion-bold">
-					{formatMessage('Password')}
-				</IonLabel>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput type="password" placeholder={formatMessage('Password')} className="ion-padding-start ion-padding-end" {...register('password', { required: true })} />
+						<IonInput fill="outline" label={formatMessage('Password')} type="password" placeholder="*****" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top" {...register('password', { required: true })} />
 						{errors.password && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
-				<IonButton type="submit" expand="full" color="secondary">
-					<p>KAYIT OL</p>
+				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" shape="round">
+					<p>{formatMessage('Sign Up')}</p>
 				</IonButton>
-				<IonButton expand="full" color="secondary" onClick={() => goLogin()}>
-					<p>GİRİŞ YAP</p>
+				<IonButton expand="block" color="secondary" shape="round" onClick={() => goLogin()}>
+					<p>{formatMessage('Sign In')}</p>
 				</IonButton>
 			</IonCardContent>
 		</NotAuthorized>

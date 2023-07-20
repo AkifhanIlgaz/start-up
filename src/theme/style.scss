@@ -1,6 +1,6 @@
 * {
 	text-transform: none;
-	border-radius: 0 !important;
+	// border-radius: 0 !important;
 }
 
 .auth-card {
@@ -23,5 +23,12 @@
 }
 
 .ion-input {
-	--background: var(--ion-color-light);
+	background-color: #fff;
+	border: 1px solid #dddfe2;
+	color: #1d2129;
+	height: 22px;
+	line-height: 16px;
+	vertical-align: middle;
+	border-radius: 6px;
+	cursor: text;
 }

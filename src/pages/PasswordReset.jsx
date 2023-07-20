@@ -1,4 +1,5 @@
-import { IonButton, IonCardContent, IonCol, IonInput, IonRow } from '@ionic/react'
+import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonRow } from '@ionic/react'
+import { send } from 'ionicons/icons'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
@@ -39,16 +40,17 @@ const PasswordReset = () => {
 
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
-			<IonCardContent>
+			<IonCardContent className="card-content">
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput fill="outline" label={formatMessage('E-Mail')} placeholder="johndoe@gmail.com" type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end" {...register('email', { required: true })}></IonInput>
+						<IonInput label={formatMessage('E-Mail')} type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
 						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
 						{errors.email && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
-				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" shape="round">
-					<p>{formatMessage('Send')}</p>
+				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary">
+					<span className="button-text">{formatMessage('Send')}</span>
+					<IonIcon icon={send} slot="end" size="small"></IonIcon>
 				</IonButton>
 			</IonCardContent>
 		</NotAuthorized>

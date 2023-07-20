@@ -16,33 +16,19 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
-class Http {
+class Request {
 	constructor() {
 		this.auth = firebase.auth()
 		this.firestore = firebase.firestore()
 		this.storage = firebase.storage()
 	}
 
-	async checkUserExistsByPhone(phoneNumber) {
-		try {
-			const userCredential = await this.auth.fetchSignInMethodsForPhoneNumber(phoneNumber)
-			return userCredential.length > 0
-		} catch (error) {
-			throw error
-		}
-	}
-
 	async sendVerificationCode(phoneNumber) {
 		try {
-			const userExists = await this.checkUserExistsByPhone(phoneNumber)
-			if (userExists) {
-				const phoneAuthProvider = new firebase.auth.PhoneAuthProvider()
-				const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
-				const verificationId = await phoneAuthProvider.verifyPhoneNumber(phoneNumber, appVerifier)
-				return verificationId
-			} else {
-				return false
-			}
+			const phoneAuthProvider = new firebase.auth.PhoneAuthProvider()
+			const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
+			const verificationId = await phoneAuthProvider.verifyPhoneNumber(phoneNumber, appVerifier)
+			return verificationId
 		} catch (error) {
 			throw error
 		}
@@ -51,28 +37,13 @@ class Http {
 	async signUpWithPhone(verificationId, verificationCode, userData) {
 		try {
 			const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode)
-			const userCredential = await this.auth.signInWithPhoneNumber(phoneNumber, credential)
+			const userCredential = await this.auth.signInWithCredential(credential)
 			const user = userCredential.user
 			const userDocRef = this.firestore.collection('users').doc(user.uid)
 			const userDocSnapshot = await userDocRef.get()
-			userData = {
-				uid: user.uid,
-				createdAt: user.metadata.createdAt,
-				creationTime: user.metadata.creationTime,
-				lastLoginAt: user.metadata.lastLoginAt,
-				lastSignInTime: user.metadata.lastSignInTime,
-				displayName: user.displayName,
-				email: user.email,
-				phoneNumber: user.phoneNumber,
-				photoURL: user.photoURL,
-				providerId: user.providerId,
-				...userData
-			}
+			userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId, ...userData }
 			if (userDocSnapshot.exists) {
-				await this.setDocument('users', user.uid, {
-					...userDocSnapshot.data(),
-					...userData
-				})
+				await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
 				return { ...userDocSnapshot.data(), ...userData }
 			} else {
 				await this.setDocument('users', user.uid, userData)
@@ -83,30 +54,16 @@ class Http {
 		}
 	}
 
-	async signInWithPhone(phoneNumber) {
+	async signInWithPhone(verificationId, verificationCode) {
 		try {
 			const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode)
-			const userCredential = await this.auth.signInWithPhoneNumber(phoneNumber, credential)
+			const userCredential = await this.auth.signInWithCredential(credential)
 			const user = userCredential.user
 			const userDocRef = this.firestore.collection('users').doc(user.uid)
 			const userDocSnapshot = await userDocRef.get()
-			const userData = {
-				uid: user.uid,
-				createdAt: user.metadata.createdAt,
-				creationTime: user.metadata.creationTime,
-				lastLoginAt: user.metadata.lastLoginAt,
-				lastSignInTime: user.metadata.lastSignInTime,
-				displayName: user.displayName,
-				email: user.email,
-				phoneNumber: user.phoneNumber,
-				photoURL: user.photoURL,
-				providerId: user.providerId
-			}
+			const userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId }
 			if (userDocSnapshot.exists) {
-				await this.setDocument('users', user.uid, {
-					...userDocSnapshot.data(),
-					...userData
-				})
+				await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
 				return { ...userDocSnapshot.data(), ...userData }
 			} else {
 				await this.setDocument('users', user.uid, userData)
@@ -136,24 +93,9 @@ class Http {
 				const user = userCredential.user
 				const userDocRef = this.firestore.collection('users').doc(user.uid)
 				const userDocSnapshot = await userDocRef.get()
-				userData = {
-					uid: user.uid,
-					createdAt: user.metadata.createdAt,
-					creationTime: user.metadata.creationTime,
-					lastLoginAt: user.metadata.lastLoginAt,
-					lastSignInTime: user.metadata.lastSignInTime,
-					displayName: user.displayName,
-					email: user.email,
-					phoneNumber: user.phoneNumber,
-					photoURL: user.photoURL,
-					providerId: user.providerId,
-					...userData
-				}
+				userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId, ...userData }
 				if (userDocSnapshot.exists) {
-					await this.setDocument('users', user.uid, {
-						...userDocSnapshot.data(),
-						...userData
-					})
+					await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
 					return { ...userDocSnapshot.data(), ...userData }
 				} else {
 					await this.setDocument('users', user.uid, userData)
@@ -173,23 +115,9 @@ class Http {
 				const user = userCredential.user
 				const userDocRef = this.firestore.collection('users').doc(user.uid)
 				const userDocSnapshot = await userDocRef.get()
-				const userData = {
-					uid: user.uid,
-					createdAt: user.metadata.createdAt,
-					creationTime: user.metadata.creationTime,
-					lastLoginAt: user.metadata.lastLoginAt,
-					lastSignInTime: user.metadata.lastSignInTime,
-					displayName: user.displayName,
-					email: user.email,
-					phoneNumber: user.phoneNumber,
-					photoURL: user.photoURL,
-					providerId: user.providerId
-				}
+				const userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId }
 				if (userDocSnapshot.exists) {
-					await this.setDocument('users', user.uid, {
-						...userDocSnapshot.data(),
-						...userData
-					})
+					await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
 					return { ...userDocSnapshot.data(), ...userData }
 				} else {
 					await this.setDocument('users', user.uid, userData)
@@ -301,4 +229,4 @@ class Http {
 	}
 }
 
-export default Http
+export default Request

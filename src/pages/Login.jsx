@@ -67,7 +67,7 @@ export const Login = () => {
 			<IonCardContent>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput placeholder={formatMessage('E-Mail')} type="email" labelPlacement="fixed" className="ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
+						<IonInput placeholder={formatMessage('E-Mail')} ariaLabel={formatMessage('E-Mail')} type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
 						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
 						{errors.email && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>

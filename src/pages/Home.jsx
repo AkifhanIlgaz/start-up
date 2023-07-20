@@ -2,8 +2,8 @@ import { Geolocation } from '@capacitor/geolocation'
 import { GoogleMap } from '@capacitor/google-maps'
 import { useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { firebaseConfig } from '../api/request'
 import { userState } from '../atoms/user'
+import firebaseConfig from '../config'
 import Authorized from '../layouts/Authorized'
 
 export const Home = () => {

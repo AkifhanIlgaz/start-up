@@ -2,17 +2,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
-
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export const firebaseConfig = {
-	apiKey: 'AIzaSyD0IYJE2tMjvT76bJhA5gN5FHTkMhkVKk0',
-	authDomain: 'start-up-e9cc0.firebaseapp.com',
-	projectId: 'start-up-e9cc0',
-	storageBucket: 'start-up-e9cc0.appspot.com',
-	messagingSenderId: '529698577815',
-	appId: '1:529698577815:web:d0716481ea7d6ce4d638d2',
-	measurementId: 'G-XPE4G2V6NR'
-}
+import firebaseConfig from '../config'
 
 firebase.initializeApp(firebaseConfig)
 

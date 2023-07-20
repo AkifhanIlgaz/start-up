@@ -22,6 +22,7 @@ import { IntlProvider } from 'react-intl'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Profile from './pages/Profile'
 import Register from './pages/Register'
 
 setupIonicReact()
@@ -44,6 +45,9 @@ const App = () => {
 					</Route>
 					<Route exact path="/home">
 						<Home />
+					</Route>
+					<Route exact path="/profile">
+						<Profile />
 					</Route>
 				</IonReactRouter>
 			</IntlProvider>

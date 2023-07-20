@@ -98,7 +98,7 @@ export const Profile = () => {
 							<img src={downloadURL} alt="" style={{ width: '50px' }} />
 						</IonCol>
 
-                        
+
 					</IonRow>
 				)}
 			</IonCardContent>

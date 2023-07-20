@@ -62,10 +62,15 @@ export const Login = () => {
 	const goPasswordReset = () => {
 		history.push('/password-reset')
 	}
-
+	// TODO: Center logo or create header
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent className="card-content">
+				<IonRow className="ion-align-items-center">
+					<IonCol className="ion-justfiy-content-center">
+						<img className="image" src="../../public/favicon.png"></img>
+					</IonCol>
+				</IonRow>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
 						<IonInput label={formatMessage('E-Mail')} type="email" labelPlacement="floating" className=" ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>

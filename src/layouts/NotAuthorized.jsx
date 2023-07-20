@@ -3,7 +3,7 @@ import { IonCard, IonCol, IonContent, IonGrid, IonPage, IonRow } from '@ionic/re
 export const NotAuthorized = ({ onSubmit, children }) => {
 	return (
 		<IonPage>
-			<IonContent color="tertiary" className="ion-padding" scrollY={false}>
+			<IonContent color="tertiary" scrollY={false}>
 				<form onSubmit={onSubmit}>
 					<IonGrid className="ion-align-items-center ion-justify-content-center ion-height">
 						<IonRow className="ion-align-items-center ion-justify-content-center ion-height">

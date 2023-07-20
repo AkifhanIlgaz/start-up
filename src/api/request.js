@@ -4,7 +4,7 @@ import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
 	apiKey: 'AIzaSyD0IYJE2tMjvT76bJhA5gN5FHTkMhkVKk0',
 	authDomain: 'start-up-e9cc0.firebaseapp.com',
 	projectId: 'start-up-e9cc0',

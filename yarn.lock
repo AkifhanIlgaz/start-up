@@ -1007,10 +1007,10 @@
   resolved "https://registry.yarnpkg.com/@capacitor/geolocation/-/geolocation-5.0.6.tgz#05f7d96f4274847c4e09f443cad71a21126a679a"
   integrity sha512-3pB3CBa38aDMk7zouGbjOMBytcaqRMBosMcqNrOQjE5LMBAPUI1cEGrUzmkj+scP0SIyYGA95Tkj0BAnzvNWag==
 
-"@capacitor/google-maps@^5.2.1":
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/@capacitor/google-maps/-/google-maps-5.2.1.tgz#04c77864c43f0b8cdb246ab781359bee97ad7c97"
-  integrity sha512-fgqxDVDujBxZh1oW392Q1vjxj5UcKRtrJ7cl1vLi1aUbV9EM87AgwVsykSQOLiZtJhS+bTmvinulEU1kp7ePPg==
+"@capacitor/google-maps@^5.2.2":
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/google-maps/-/google-maps-5.2.2.tgz#566182fd312d9df3e2fed9458363c360e9f39194"
+  integrity sha512-cy2eeQfTwnefHHZ8w0bEjpWTVXbYDJoIT+ZzmC88exvbOqZwVlsyQCApi4QfAyjh6uAqvWlaUFzARBcQW2x3hA==
   dependencies:
     "@googlemaps/js-api-loader" "~1.13.7"
     "@googlemaps/markerclusterer" "~2.0.7"

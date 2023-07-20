@@ -60,24 +60,29 @@ export const Register = () => {
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent>
+				<IonLabel color="light" className="ion-bold">
+					{formatMessage('E-Mail')}
+				</IonLabel>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput label={formatMessage('E-Mail')} placeholder="johndoe@gmail.com" type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end" {...register('email', { required: true })}></IonInput>
-						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
+						<IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} />
 						{errors.email && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
+				<IonLabel color="light" className="ion-bold">
+					{formatMessage('Password')}
+				</IonLabel>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput label={formatMessage('Password')} type="password" placeholder="*****" labelPlacement="floating" className="ion-padding-start ion-padding-end" {...register('password', { required: true })} />
+						<IonInput type="password" placeholder={formatMessage('Password')} className="ion-padding-start ion-padding-end" {...register('password', { required: true })} />
 						{errors.password && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
-				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" shape="round">
-					<p>{formatMessage('Sign Up')}</p>
+				<IonButton type="submit" expand="full" color="secondary">
+					<p>KAYIT OL</p>
 				</IonButton>
-				<IonButton expand="block" color="secondary" shape="round" onClick={() => goLogin()}>
-					<p>{formatMessage('Sign In')}</p>
+				<IonButton expand="full" color="secondary" onClick={() => goLogin()}>
+					<p>GİRİŞ YAP</p>
 				</IonButton>
 			</IonCardContent>
 		</NotAuthorized>

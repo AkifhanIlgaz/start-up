@@ -43,6 +43,9 @@ export const Login = () => {
 		}
 	}
 
+	const goRegister = () => {
+		history.push('/register')
+	}
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent>
@@ -66,6 +69,9 @@ export const Login = () => {
 				</IonRow>
 				<IonButton type="submit" expand="full" color="secondary">
 					<p>GİRİŞ YAP</p>
+				</IonButton>
+				<IonButton expand="full" color="secondary" onClick={() => goRegister()}>
+					<p>KAYIT OL</p>
 				</IonButton>
 			</IonCardContent>
 		</NotAuthorized>

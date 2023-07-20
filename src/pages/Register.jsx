@@ -43,8 +43,8 @@ export const Register = () => {
 		}
 	}
 
-	const goRegister = () => {
-		history.push('/register')
+	const goLogin = () => {
+		history.push('/login')
 	}
 
 	return (
@@ -69,10 +69,10 @@ export const Register = () => {
 					</IonCol>
 				</IonRow>
 				<IonButton type="submit" expand="full" color="secondary">
-					<p>GİRİŞ YAP</p>
-				</IonButton>
-				<IonButton expand="full" color="secondary" onClick={() => goRegister()}>
 					<p>KAYIT OL</p>
+				</IonButton>
+				<IonButton expand="full" color="secondary" onClick={() => goLogin()}>
+					<p>GİRİŞ YAP</p>
 				</IonButton>
 			</IonCardContent>
 		</NotAuthorized>

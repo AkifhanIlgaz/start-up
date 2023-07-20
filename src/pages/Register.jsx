@@ -1,4 +1,5 @@
-import { IonButton, IonCardContent, IonCol, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
+import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
+import { personCircleOutline } from 'ionicons/icons'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -6,7 +7,6 @@ import { useRecoilState } from 'recoil'
 import Request from '../api/request'
 import { userState } from '../atoms/user'
 import NotAuthorized from '../layouts/NotAuthorized'
-
 export const Register = () => {
 	const history = useHistory()
 
@@ -59,26 +59,31 @@ export const Register = () => {
 
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
-			<IonCardContent>
+			<IonCardContent className="card-content">
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput fill="outline" label={formatMessage('E-Mail')} placeholder="johndoe@gmail.com" type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end" {...register('email', { required: true })}></IonInput>
+						<IonInput label={formatMessage('E-Mail')} type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
 						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
 						{errors.email && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput fill="outline" label={formatMessage('Password')} type="password" placeholder="*****" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top" {...register('password', { required: true })} />
+						<IonInput label={formatMessage('Password')} type="password" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top ion-input" {...register('password', { required: true })} />
 						{errors.password && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
-				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" shape="round">
-					<p>{formatMessage('Sign Up')}</p>
+				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary">
+					<span className="button-text">{formatMessage('Sign Up')}</span>
+					<IonIcon icon={personCircleOutline} slot="end"></IonIcon>
 				</IonButton>
-				<IonButton expand="block" color="secondary" shape="round" onClick={() => goLogin()}>
-					<p>{formatMessage('Sign In')}</p>
-				</IonButton>
+				<IonRow className="ion-text-center">
+					<IonCol>
+						<a onClick={goLogin} style={{ textDecoration: 'none', color: '-moz-initial', fontSize: '12px' }}>
+							{formatMessage('Already have an account?')}
+						</a>
+					</IonCol>
+				</IonRow>
 			</IonCardContent>
 		</NotAuthorized>
 	)

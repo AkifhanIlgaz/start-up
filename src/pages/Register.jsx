@@ -74,7 +74,7 @@ export const Register = () => {
 					</IonCol>
 				</IonRow>
 				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary">
-					<span className="button-text">{formatMessage('Sign Up')}</span>
+					<span>{formatMessage('Sign Up')}</span>
 					<IonIcon icon={personCircleOutline} slot="end"></IonIcon>
 				</IonButton>
 				<IonRow className="ion-text-center">

@@ -49,7 +49,7 @@ const PasswordReset = () => {
 					</IonCol>
 				</IonRow>
 				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary">
-					<span className="button-text">{formatMessage('Send')}</span>
+					<span style={{ fontSize: '17px' }}>{formatMessage('Send')}</span>
 					<IonIcon icon={send} slot="end" size="small"></IonIcon>
 				</IonButton>
 			</IonCardContent>

@@ -67,11 +67,6 @@ export const Login = () => {
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent className="card-content">
 				<IonRow className="ion-align-items-center">
-					<IonCol className="ion-justfiy-content-center">
-						<img className="image" src="../../public/favicon.png"></img>
-					</IonCol>
-				</IonRow>
-				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
 						<IonInput label={formatMessage('E-Mail')} type="email" labelPlacement="floating" className=" ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
 						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
@@ -84,10 +79,14 @@ export const Login = () => {
 						{errors.password && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>
 				</IonRow>
-				<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary">
-					<span className="button-text">{formatMessage('Sign In')}</span>
-					<IonIcon icon={logInOutline} slot="end"></IonIcon>
-				</IonButton>
+				<IonRow className="ion-align-items-center">
+					<IonCol className="ion-no-padding">
+						<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary">
+							<span>{formatMessage('Sign In')}</span>
+							<IonIcon icon={logInOutline} slot="end"></IonIcon>
+						</IonButton>
+					</IonCol>
+				</IonRow>
 
 				<IonRow>
 					<IonCol>

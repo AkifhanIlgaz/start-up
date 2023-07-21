@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonInput, IonRow } from '@ionic/react'
+import { IonButton, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonInput, IonList, IonRow, IonSelect, IonSelectOption } from '@ionic/react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
@@ -31,6 +31,7 @@ const AddPet = () => {
 	const onSubmit = async data => {
 		console.log(data)
 	}
+	const options = ['Apples', 'Oranges', 'Bananas']
 
 	return (
 		<IonContent color={'success'}>
@@ -45,6 +46,17 @@ const AddPet = () => {
 									<Input label={formatMessage('Type')} type="text" formLabel="type" name="age" required="true" register={register} />
 									<Input label={formatMessage('Type')} type="text" formLabel="type" name="info" required="true" register={register} />
 									<Input label={formatMessage('Type')} type="text" formLabel="type" name="vaccines" required="true" register={register} />
+									<IonList>
+										<IonRow className="ion-align-items-center">
+											<IonCol className="ion-padding-top ">
+												<IonSelect interface="popover" placeholder="Select" className="ion-select">
+													{options.map(option => {
+														return <IonSelectOption cvalue={option.toLowerCase()}>{option}</IonSelectOption>
+													})}
+												</IonSelect>
+											</IonCol>
+										</IonRow>
+									</IonList>
 
 									<IonRow className="ion-align-items-center">
 										<IonCol className="ion-no-padding">

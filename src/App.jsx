@@ -27,7 +27,9 @@ import { IntlProvider } from 'react-intl'
 import { useRecoilState } from 'recoil'
 import { userState } from './atoms/user'
 import AddPet from './pages/AddPet'
+import AddPetSelect from './pages/AddPetSelect'
 import PasswordReset from './pages/PasswordReset'
+import Profile from './pages/Profile'
 import Register from './pages/Register'
 setupIonicReact()
 
@@ -56,8 +58,14 @@ const App = () => {
 						<Route exact path="/password-reset">
 							<PasswordReset />
 						</Route>
+						<Route exact path="/profile">
+							<Profile />
+						</Route>
 						<Route exact path="/add-pet">
 							<AddPet />
+						</Route>
+						<Route exact path="/add-pet-select">
+							<AddPetSelect />
 						</Route>
 					</IonRouterOutlet>
 					{user.email && <Tabs />}

@@ -218,6 +218,8 @@ class Request {
 			throw error
 		}
 	}
+
+	
 }
 
 export default Request

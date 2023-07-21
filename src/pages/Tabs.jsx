@@ -10,7 +10,7 @@ const Tabs = () => {
 	return (
 		<IonTabs>
 			<IonRouterOutlet>
-				<Route path="/home" component={Home} exact={true} />
+				<Route path="/home"  component={Home} exact={true} />
 				<Route path="/match" component={Login} exact={true} />
 				<Route path="/search" component={Home} exact={true} />
 				<Route path="/profile" component={Profile} exact={true} />

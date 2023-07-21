@@ -19,15 +19,14 @@ import './theme/variables.css'
 import { IonRouterOutlet } from '@ionic/react'
 import React from 'react'
 import Locales from './lang'
-import Home from './pages/Home'
 import Login from './pages/Login'
-import Profile from './pages/Profile'
 import Tabs from './pages/Tabs'
 
 import { IntlProvider } from 'react-intl'
 
 import { useRecoilState } from 'recoil'
 import { userState } from './atoms/user'
+import AddPet from './pages/AddPet'
 import PasswordReset from './pages/PasswordReset'
 import Register from './pages/Register'
 setupIonicReact()
@@ -54,14 +53,11 @@ const App = () => {
 						<Route exact path="/register">
 							<Register />
 						</Route>
-						<Route exact path="/home">
-							<Home />
-						</Route>
-						<Route exact path="/profile">
-							<Profile />
-						</Route>
 						<Route exact path="/password-reset">
 							<PasswordReset />
+						</Route>
+						<Route exact path="/add-pet">
+							<AddPet />
 						</Route>
 					</IonRouterOutlet>
 					{user.email && <Tabs />}

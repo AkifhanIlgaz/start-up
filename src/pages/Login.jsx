@@ -94,7 +94,7 @@ export const Login = () => {
 							{formatMessage('Forgot your password ?')}
 						</a>
 						<a className="ion-float-right" onClick={goRegister} style={{ textDecoration: 'none', color: '-moz-initial', fontSize: '12px' }}>
-							{formatMessage("Don't have an account?")}
+							{formatMessage("Don't have an account ?")}
 						</a>
 					</IonCol>
 				</IonRow>

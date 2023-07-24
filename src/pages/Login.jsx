@@ -62,7 +62,6 @@ export const Login = () => {
 	const goPasswordReset = () => {
 		history.push('/password-reset')
 	}
-	// TODO: Center logo or create header
 	return (
 		<NotAuthorized onSubmit={handleSubmit(onSubmit)}>
 			<IonCardContent className="card-content">

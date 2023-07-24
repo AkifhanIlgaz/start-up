@@ -1,59 +1,22 @@
-import { Geolocation } from '@capacitor/geolocation'
-import { GoogleMap } from '@capacitor/google-maps'
-import { useEffect, useRef, useState } from 'react'
-import { useRecoilState } from 'recoil'
-import { userState } from '../atoms/user'
-import firebaseConfig from '../config'
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon } from '@ionic/react'
 import Authorized from '../layouts/Authorized'
+import { heartOutline } from 'ionicons/icons'
+import PetCard from '../components/PetCard'
+
+const pet = {
+	imgUrl: 'https://ionicframework.com/docs/img/demos/card-media.png',
+	petName: 'Mırmır',
+	ownerName: 'Jon',
+	info: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat, tempora praesentium cumque alias quod!',
+	type: 'Van',
+	age: 2,
+	vaccines: 'Tam'
+}
 
 export const Home = () => {
-	const [user, setUser] = useRecoilState(userState)
-
-	const [coordinate, setCoordinate] = useState({ latitude: 38.9637, longitude: 35.2433 })
-
-	const mapRef = useRef()
-
-	let newMap
-
-	const markerClicked = e => {
-		console.log(e)
-	}
-
-	useEffect(() => {
-		const loadMap = async () => {
-			const coordinates = await Geolocation.getCurrentPosition()
-			console.log('Current position:', coordinates.coords)
-			setCoordinate(coordinates.coords)
-			newMap = await GoogleMap.create({
-				id: 'map',
-				element: mapRef.current,
-				apiKey: firebaseConfig.apiKey,
-				config: {
-					center: {
-						lat: coordinates.coords.latitude,
-						lng: coordinates.coords.longitude
-					},
-					zoom: 12
-				}
-			})
-			newMap.addMarkers([{ coordinate: { lat: coordinates.coords.latitude, lng: coordinates.coords.longitude }, title: 'BAŞLIK', snippet: 'AÇIKLAMA' }])
-			await newMap.setOnMarkerClickListener(e => {
-				markerClicked(e)
-			})
-		}
-		loadMap()
-	}, [])
-
 	return (
 		<Authorized>
-			<capacitor-google-map
-				ref={mapRef}
-				style={{
-					display: 'inline-block',
-					width: '100%',
-					height: '100vh'
-				}}
-			></capacitor-google-map>
+			<PetCard imgUrl={pet.imgUrl} petName={pet.petName} ownerName={pet.ownerName} info={pet.info} type={pet.type} age={pet.age} vaccines={pet.vaccines} />
 		</Authorized>
 	)
 }

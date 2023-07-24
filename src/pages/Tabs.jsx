@@ -5,23 +5,25 @@ import { Route } from 'react-router-dom'
 import Home from './Home'
 import Login from './Login'
 import Profile from './Profile'
+import Search from './Search'
 
 const Tabs = () => {
 	return (
 		<IonTabs>
 			<IonRouterOutlet>
-				<Route path="/home"  component={Home} exact={true} />
-				<Route path="/match" component={Login} exact={true} />
-				<Route path="/search" component={Home} exact={true} />
-				<Route path="/profile" component={Profile} exact={true} />
+				<Route path="/home" render={() => <Home />} exact={true} />
+				<Route path="/search" render={() => <Search />} exact={true} />
+				<Route path="/history" render={() => <Profile />} exact={true} />
+				<Route path="/profile" render={() => <Profile />} exact={true} />
 			</IonRouterOutlet>
 			<IonTabBar slot="bottom">
-				<IonTabButton tab="home" href="/login">
+				<IonTabButton tab="home" href="/home">
 					<IonIcon icon={homeOutline}></IonIcon>
 				</IonTabButton>
-				<IonTabButton tab="match" href="/home">
+				<IonTabButton tab="search" href="/search">
 					<IonIcon icon={earth}></IonIcon>
 				</IonTabButton>
+				{/* Notifications && Messages */}
 				<IonTabButton tab="history" href="/history">
 					<IonIcon icon={notificationsOutline}></IonIcon>
 				</IonTabButton>

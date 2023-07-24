@@ -8,6 +8,7 @@ import { userState } from '../atoms/user'
 import Authorized from '../layouts/Authorized'
 import AddPet from './AddPet'
 import { addOutline } from 'ionicons/icons'
+import Tabs from './Tabs'
 
 export const Profile = () => {
 	const modal = useRef(null)
@@ -33,6 +34,8 @@ export const Profile = () => {
 	const [loading, setLoading] = useState(false)
 
 	const upload = useRef()
+
+	const [isOpen, setIsOpen] = useState(false)
 
 	const {
 		register,
@@ -73,11 +76,11 @@ export const Profile = () => {
 					<img src={user.photoURL} alt="" />
 				</IonAvatar>
 			)}
-			<IonButton id="open-modal" expand="block">
+			<IonButton onClick={() => setIsOpen(true)} expand="block">
 				<IonIcon icon={addOutline}></IonIcon>
 				<span>Add Pet</span>
 			</IonButton>
-			<AddPet />
+			<AddPet isOpen={isOpen} setIsOpen={setIsOpen} />
 			<IonCard>
 				<IonCardContent>
 					{!downloadURL && (
@@ -104,6 +107,7 @@ export const Profile = () => {
 						</IonRow>
 					)}
 				</IonCardContent>
+
 				<IonButton>Add pet</IonButton>
 			</IonCard>
 		</Authorized>

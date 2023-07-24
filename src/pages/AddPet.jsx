@@ -1,5 +1,5 @@
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonList, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 import { useRecoilState } from 'recoil'
@@ -10,19 +10,7 @@ const Input = props => {
 	return <IonInput label={props.label} type={props.type} labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input" {...props.register(props.name, { required: props.required })}></IonInput>
 }
 
-const AddPet = () => {
-	const modal = useRef(null)
-	const page = useRef(null)
-	const [presentingElement, setPresentingElement] = useState(null)
-
-	useEffect(() => {
-		setPresentingElement(page.current)
-	}, [])
-
-	function dismiss() {
-		modal.current.dismiss()
-	}
-
+const AddPet = ({ isOpen, setIsOpen }) => {
 	const [user, setUser] = useRecoilState(userState)
 
 	const intl = useIntl()
@@ -43,12 +31,12 @@ const AddPet = () => {
 
 	return (
 		<>
-			<IonModal ref={modal} trigger="open-modal" presentingElement={presentingElement}>
+			<IonModal isOpen={isOpen}>
 				<IonHeader>
 					<IonToolbar>
 						<IonTitle>Add Pet</IonTitle>
 						<IonButtons slot="end">
-							<IonButton onClick={dismiss}>Close</IonButton>
+							<IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
 						</IonButtons>
 					</IonToolbar>
 				</IonHeader>

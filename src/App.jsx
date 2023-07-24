@@ -35,6 +35,7 @@ setupIonicReact()
 
 const App = () => {
 	const locale = Locales['tr']
+
 	const [user, setUser] = useRecoilState(userState)
 
 	const resetUser = () => {
@@ -58,14 +59,11 @@ const App = () => {
 						<Route exact path="/profile">
 							<Profile />
 						</Route>
-						<Route exact path="/add-pet">
-							<AddPet />
-						</Route>
 						<Route exact path="/search">
 							<Search />
 						</Route>
 					</IonRouterOutlet>
-					{/* {user !== null && <Tabs />} */}
+					<Tabs />
 				</IonReactRouter>
 			</IntlProvider>
 		</IonApp>

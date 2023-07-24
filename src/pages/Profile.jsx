@@ -1,19 +1,26 @@
-import { IonAvatar, IonCard, IonCardContent, IonCol, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
-import { useRef, useState } from 'react'
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert } from '@ionic/react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
-import { useHistory, useLocation } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import Request from '../api/request'
 import { userState } from '../atoms/user'
 import Authorized from '../layouts/Authorized'
-
-const ProfileImage = () => {}
+import AddPet from './AddPet'
+import { addOutline } from 'ionicons/icons'
 
 export const Profile = () => {
-	const history = useHistory()
+	const modal = useRef(null)
+	const page = useRef(null)
+	const [presentingElement, setPresentingElement] = useState(null)
 
-	const location = useLocation()
+	useEffect(() => {
+		setPresentingElement(page.current)
+	}, [])
+
+	function dismiss() {
+		modal.current.dismiss()
+	}
 
 	const intl = useIntl()
 
@@ -32,26 +39,6 @@ export const Profile = () => {
 		handleSubmit,
 		formState: { errors }
 	} = useForm()
-
-	const [presentAlert] = useIonAlert()
-
-	const alert = (title, message) => {
-		presentAlert({
-			header: title,
-			message: message,
-			buttons: [formatMessage('Ok')]
-		})
-	}
-
-	const uploadFile = async (storagePath, file) => {
-		try {
-			const req = new Request()
-			const res = await req.uploadFile(storagePath, file)
-			return res
-		} catch (error) {
-			throw error
-		}
-	}
 
 	const handleFileUpload = async e => {
 		console.log(e)
@@ -86,6 +73,11 @@ export const Profile = () => {
 					<img src={user.photoURL} alt="" />
 				</IonAvatar>
 			)}
+			<IonButton id="open-modal" expand="block">
+				<IonIcon icon={addOutline}></IonIcon>
+				<span>Add Pet</span>
+			</IonButton>
+			<AddPet />
 			<IonCard>
 				<IonCardContent>
 					{!downloadURL && (
@@ -112,6 +104,7 @@ export const Profile = () => {
 						</IonRow>
 					)}
 				</IonCardContent>
+				<IonButton>Add pet</IonButton>
 			</IonCard>
 		</Authorized>
 	)

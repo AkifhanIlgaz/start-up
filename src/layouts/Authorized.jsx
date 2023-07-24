@@ -1,4 +1,4 @@
-import { IonContent, IonPage, IonGrid, IonRow, IonCol } from '@ionic/react'
+import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonHeader, IonToolbar, IonTitle } from '@ionic/react'
 import React from 'react'
 
 export const Authorized = ({ children }) => {

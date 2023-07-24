@@ -12,7 +12,7 @@ export const messages = {
 	Name: 'İsim',
 	Age: 'Yaş',
 	Type: 'Tip',
-	Specy: 'Cins',
+	Gender: 'Cinsiyet',
 	Info: 'Bilgi',
 	Vaccines: 'Aşılar',
 	Photo: 'Fotoğraf'

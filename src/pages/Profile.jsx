@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCol, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
+import { IonAvatar, IonCard, IonCardContent, IonCol, IonInput, IonLabel, IonRow, useIonAlert } from '@ionic/react'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
@@ -7,6 +7,8 @@ import { useRecoilState } from 'recoil'
 import Request from '../api/request'
 import { userState } from '../atoms/user'
 import Authorized from '../layouts/Authorized'
+
+const ProfileImage = () => {}
 
 export const Profile = () => {
 	const history = useHistory()
@@ -79,7 +81,11 @@ export const Profile = () => {
 
 	return (
 		<Authorized>
-			{user !== null && <img src={user.photoURL} alt="" />}
+			{user !== null && (
+				<IonAvatar>
+					<img src={user.photoURL} alt="" />
+				</IonAvatar>
+			)}
 			<IonCard>
 				<IonCardContent>
 					{!downloadURL && (

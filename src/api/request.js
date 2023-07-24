@@ -74,7 +74,6 @@ class Request {
 	}
 
 	async signUpWithEmail(email, password, userData) {
-		console.log(userData)
 		try {
 			const userExists = await this.checkUserExistsByEMail(email)
 			if (userExists) {

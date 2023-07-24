@@ -2,7 +2,7 @@ import { IonButton, IonCardContent, IonCol, IonIcon, IonInput, IonLabel, IonRow,
 import { logInOutline } from 'ionicons/icons'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import Request from '../api/request'
 import { userState } from '../atoms/user'
@@ -10,8 +10,6 @@ import NotAuthorized from '../layouts/NotAuthorized'
 
 export const SignIn = () => {
 	const history = useHistory()
-
-	const location = useLocation()
 
 	const intl = useIntl()
 

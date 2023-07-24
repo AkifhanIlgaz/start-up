@@ -24,9 +24,6 @@ import Tabs from './pages/Tabs'
 
 import { IntlProvider } from 'react-intl'
 
-import { useRecoilState } from 'recoil'
-import { userState } from './atoms/user'
-import AddPet from './pages/AddPet'
 import PasswordReset from './pages/PasswordReset'
 import Profile from './pages/Profile'
 import Search from './pages/Search'
@@ -35,12 +32,6 @@ setupIonicReact()
 
 const App = () => {
 	const locale = Locales['tr']
-
-	const [user, setUser] = useRecoilState(userState)
-
-	const resetUser = () => {
-		setUser({})
-	}
 
 	return (
 		<IonApp>

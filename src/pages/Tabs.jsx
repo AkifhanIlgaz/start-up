@@ -3,7 +3,6 @@ import { earth, homeOutline, notificationsOutline, personOutline } from 'ionicon
 import React from 'react'
 import { Route } from 'react-router-dom'
 import Home from './Home'
-import Login from './SignIn'
 import Profile from './Profile'
 import Search from './Search'
 import { useRecoilState } from 'recoil'

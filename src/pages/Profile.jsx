@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonGrid, IonHeader, IonIcon, IonInput, IonLabel, IonModal, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert } from '@ionic/react'
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonTitle, IonToolbar, useIonAlert } from '@ionic/react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
@@ -9,27 +9,20 @@ import Authorized from '../layouts/Authorized'
 import AddPet from './AddPet'
 import { addOutline } from 'ionicons/icons'
 import Tabs from './Tabs'
+import PetCard from '../components/PetCard'
+import MyPets from '../components/MyPets'
+import { set } from 'lodash'
+
+const defaultImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtMHFQmELtQP7GiQrvpYQQVYIU_2ZoF-n-I3CqhOs9qaetDVhykH1PSmMSlfD5nCklxY&usqp=CAU'
 
 export const Profile = () => {
-	const modal = useRef(null)
-	const page = useRef(null)
-	const [presentingElement, setPresentingElement] = useState(null)
-
-	useEffect(() => {
-		setPresentingElement(page.current)
-	}, [])
-
-	function dismiss() {
-		modal.current.dismiss()
-	}
-
 	const intl = useIntl()
 
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
 
 	const [user, setUser] = useRecoilState(userState)
-
 	const [downloadURL, setDownloadURL] = useState(null)
+	const [lastSegment, setLastSegment] = useState(null)
 
 	const [loading, setLoading] = useState(false)
 
@@ -67,18 +60,34 @@ export const Profile = () => {
 		upload.current.click()
 	}
 
-	const onSubmit = async data => {}
+	const pet = {
+		imgUrl: user.photoURL,
+		name: 'Mırmır'
+	}
+
+	const pets = [pet, pet, pet]
 
 	return (
 		<Authorized>
-			{user !== null && (
-				<IonAvatar>
-					<img src={user.photoURL} alt="" />
-				</IonAvatar>
-			)}
-			<IonButton onClick={() => setIsOpen(true)} expand="block">
+			<div className="ion-text-center">
+				<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ borderRadius: '50%', width: '50%' }} />
+			</div>
+			<div className="ion-text-center ion-padding-top">
+				<span>{user.username}</span>
+			</div>
+			<IonToolbar color={'transparent'}>
+				<IonSegment onIonChange={e => setLastSegment(e.detail.value)}>
+					<IonSegmentButton value="pets">
+						<IonLabel>Pets</IonLabel>
+					</IonSegmentButton>
+					<IonSegmentButton value="favorites">
+						<IonLabel>History</IonLabel>
+					</IonSegmentButton>
+				</IonSegment>
+			</IonToolbar>
+			{lastSegment == 'pets' ? <MyPets pets={pets} /> : <div>History</div>}
+			<IonButton onClick={() => setIsOpen(true)}>
 				<IonIcon icon={addOutline}></IonIcon>
-				<span>Add Pet</span>
 			</IonButton>
 			<AddPet isOpen={isOpen} setIsOpen={setIsOpen} />
 			<IonCard>
@@ -107,8 +116,6 @@ export const Profile = () => {
 						</IonRow>
 					)}
 				</IonCardContent>
-
-				<IonButton>Add pet</IonButton>
 			</IonCard>
 		</Authorized>
 	)

@@ -38,8 +38,9 @@ export const SignUp = () => {
 	const onSubmit = async data => {
 		const fetchData = async () => {
 			try {
+				console.log(data)
 				const req = new Request()
-				const res = await req.signUpWithEmail(data.email, data.password)
+				const res = await req.signUpWithEmail(data.email, data.password, { username: data.username })
 				if (res === false) {
 					alert('HATA', 'already exists')
 					return
@@ -63,7 +64,13 @@ export const SignUp = () => {
 			<IonCardContent className="card-content">
 				<IonRow className="ion-align-items-center">
 					<IonCol className="ion-no-padding">
-						<IonInput label={formatMessage('E-Mail')} type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input" {...register('email', { required: true })}></IonInput>
+						<IonInput label={formatMessage('User Name')} type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top ion-input" {...register('username', { required: true })} />
+						{errors.name && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
+					</IonCol>
+				</IonRow>
+				<IonRow className="ion-align-items-center">
+					<IonCol className="ion-no-padding">
+						<IonInput label={formatMessage('E-Mail')} type="email" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-margin-top ion-input" {...register('email', { required: true })}></IonInput>
 						{/* <IonInput type="email" placeholder={formatMessage('E-Mail')} className="ion-padding-start ion-padding-end" {...register('email', { required: true })} /> */}
 						{errors.email && <IonLabel color="danger">Bu alan gerekli!</IonLabel>}
 					</IonCol>

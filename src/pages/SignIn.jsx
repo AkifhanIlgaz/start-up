@@ -45,6 +45,7 @@ export const SignIn = () => {
 					history.push('/register')
 					return
 				}
+				console.log(res)
 				setUser(res)
 				history.push('/home')
 			} catch (error) {

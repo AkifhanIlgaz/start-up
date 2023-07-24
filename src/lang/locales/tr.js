@@ -7,6 +7,7 @@ export const messages = {
 	Send: 'Gönder',
 	'Already have an account?': 'Zaten hesabın var mı?',
 	"Don't have an account ?": 'Hesabın yok mu?',
+	'User Name': 'Kullanıcı İsmi',
 	Add: 'Ekle',
 	Name: 'İsim',
 	Age: 'Yaş',

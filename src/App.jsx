@@ -65,7 +65,7 @@ const App = () => {
 							<Search />
 						</Route>
 					</IonRouterOutlet>
-					{user && <Tabs />}
+					{user !== null && <Tabs />}
 				</IonReactRouter>
 			</IntlProvider>
 		</IonApp>

@@ -74,6 +74,7 @@ class Request {
 	}
 
 	async signUpWithEmail(email, password, userData) {
+		console.log(userData)
 		try {
 			const userExists = await this.checkUserExistsByEMail(email)
 			if (userExists) {
@@ -104,8 +105,9 @@ class Request {
 				const userCredential = await this.auth.signInWithEmailAndPassword(email, password)
 				const user = userCredential.user
 				const userDocRef = this.firestore.collection('users').doc(user.uid)
+
 				const userDocSnapshot = await userDocRef.get()
-				const userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId }
+				const userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }
 				if (userDocSnapshot.exists) {
 					await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
 					return { ...userDocSnapshot.data(), ...userData }
@@ -218,8 +220,6 @@ class Request {
 			throw error
 		}
 	}
-
-	
 }
 
 export default Request

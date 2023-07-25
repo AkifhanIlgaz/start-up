@@ -12,7 +12,7 @@ const PetCard = props => {
 
 	return (
 		<IonCard>
-			<img src={props.imgUrl} alt="pet image" />
+			<img src={props.imgUrl} alt="pet image" style={{ width: '100vh', height: '300px' }} />
 			<IonCardHeader className="ion-padding-bottom">
 				<IonCardTitle
 					style={{

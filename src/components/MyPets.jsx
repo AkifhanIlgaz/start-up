@@ -19,9 +19,9 @@ const PetCard = ({ pet }) => {
 		<IonItemSliding>
 			<IonItem>
 				<IonAvatar className="ion-no-padding">
-					<img src={pet.data.photoURL} alt="" />
+					<img src={pet.photoURL} alt="" />
 				</IonAvatar>
-				<span style={{ marginLeft: '1rem' }}>{pet.data.name}</span>
+				<span style={{ marginLeft: '1rem' }}>{pet.name}</span>
 			</IonItem>
 			<Options />
 		</IonItemSliding>
@@ -49,7 +49,7 @@ const MyPets = () => {
 	return (
 		<IonList>
 			{pets.map(pet => (
-				<PetCard key={user.uid} pet={pet} />
+				<PetCard key={pet.id} pet={pet} />
 			))}
 		</IonList>
 	)

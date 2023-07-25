@@ -229,7 +229,7 @@ class Request {
 			snapshot.forEach(pet => {
 				myPets.push({
 					id: pet.id,
-					data: pet.data()
+					...pet.data()
 				})
 			})
 			return myPets

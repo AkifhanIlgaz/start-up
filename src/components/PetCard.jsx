@@ -3,7 +3,7 @@ import React from 'react'
 import { heartOutline } from 'ionicons/icons'
 import { useHistory } from 'react-router'
 
-const PetCard = props => {
+const PetCard = ({ pet }) => {
 	const history = useHistory()
 
 	const goProfile = userId => {
@@ -12,7 +12,7 @@ const PetCard = props => {
 
 	return (
 		<IonCard>
-			<img src={props.imgUrl} alt="pet image" style={{ width: '100vh', height: '300px' }} />
+			<img src={pet.photoURL} alt="pet image" style={{ width: '100vh', height: '300px' }} />
 			<IonCardHeader className="ion-padding-bottom">
 				<IonCardTitle
 					style={{
@@ -22,21 +22,21 @@ const PetCard = props => {
 						alignItems: 'center'
 					}}
 				>
-					<span>{props.petName}</span>
+					<span>{pet.name}</span>
 					<IonButton color={'danger'} size="small">
 						<IonIcon icon={heartOutline}></IonIcon>
 					</IonButton>
 				</IonCardTitle>
 				<IonCardSubtitle>
-					<span onClick={() => goProfile(props.ownerId)}>{props.ownerName}</span>
+					<span onClick={() => goProfile(pet.ownerId)}>{pet.username}</span>
 				</IonCardSubtitle>
 			</IonCardHeader>
 			<IonCardContent>
-				{props.info}
+				{pet.info}
 				<div className="ion-padding-top">
-					<IonChip color={'primary'}>Type: {props.type}</IonChip>
-					<IonChip color={'tertiary'}> Age: {props.age}</IonChip>
-					{props.vaccines ? <IonChip color={'success'}>Vaccines: Tam</IonChip> : <IonChip color={'danger'}>Vaccines: Eksik</IonChip>}
+					<IonChip color={'primary'}>Type: {pet.type}</IonChip>
+					<IonChip color={'tertiary'}> Age: {pet.age}</IonChip>
+					{pet.vaccines ? <IonChip color={'success'}>Vaccines: Tam</IonChip> : <IonChip color={'danger'}>Vaccines: Eksik</IonChip>}
 				</div>
 			</IonCardContent>
 		</IonCard>

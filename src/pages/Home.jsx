@@ -270,7 +270,7 @@ export const Home = () => {
 	return (
 		<Authorized>
 			{mockPets.map(pet => {
-				return <PetCard key={pet.id} ownerId={pet.userId} imgUrl={pet.photoURL} petName={pet.name} ownerName={pet.name} info={pet.info} type={pet.type} age={pet.age} vaccines={pet.vaccines} />
+				return <PetCard key={pet.id} pet={pet} />
 			})}
 		</Authorized>
 	)

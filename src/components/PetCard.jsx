@@ -28,7 +28,7 @@ const PetCard = ({ pet }) => {
 					</IonButton>
 				</IonCardTitle>
 				<IonCardSubtitle>
-					<span onClick={() => goProfile(pet.ownerId)}>{pet.username}</span>
+					<span onClick={() => goProfile(pet.ownerId)}>{pet.ownerName}</span>
 				</IonCardSubtitle>
 			</IonCardHeader>
 			<IonCardContent>

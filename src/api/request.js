@@ -3,6 +3,7 @@ import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
 import firebaseConfig from '../config'
+import { query, where, getDocs } from 'firebase/firestore'
 
 firebase.initializeApp(firebaseConfig)
 
@@ -215,6 +216,23 @@ class Request {
 		try {
 			const storageRef = this.storage.ref(storagePath)
 			await storageRef.delete()
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async getPets(userId) {
+		const myPets = []
+		try {
+			const petsRef = this.firestore.collection('pets')
+			const snapshot = await petsRef.where('userId', '==', userId).get()
+			snapshot.forEach(pet => {
+				myPets.push({
+					id: pet.id,
+					data: pet.data()
+				})
+			})
+			return myPets
 		} catch (error) {
 			throw error
 		}

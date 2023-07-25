@@ -12,7 +12,6 @@ import Tabs from './Tabs'
 import PetCard from '../components/PetCard'
 import MyPets from '../components/MyPets'
 import { set } from 'lodash'
-
 const defaultImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtMHFQmELtQP7GiQrvpYQQVYIU_2ZoF-n-I3CqhOs9qaetDVhykH1PSmMSlfD5nCklxY&usqp=CAU'
 
 export const Profile = () => {
@@ -37,7 +36,6 @@ export const Profile = () => {
 	} = useForm()
 
 	const handleFileUpload = async e => {
-		console.log(e)
 		const file = e.target.files[0]
 		try {
 			setLoading(true)
@@ -60,13 +58,6 @@ export const Profile = () => {
 		upload.current.click()
 	}
 
-	const pet = {
-		imgUrl: user.photoURL,
-		name: 'Mırmır'
-	}
-
-	const pets = [pet, pet, pet]
-
 	return (
 		<Authorized>
 			<div className="ion-text-center">
@@ -85,7 +76,7 @@ export const Profile = () => {
 					</IonSegmentButton>
 				</IonSegment>
 			</IonToolbar>
-			{lastSegment == 'pets' ? <MyPets pets={pets} /> : <div>History</div>}
+			{lastSegment == 'pets' ? <MyPets /> : <div>History</div>}
 			<IonButton onClick={() => setIsOpen(true)}>
 				<IonIcon icon={addOutline}></IonIcon>
 			</IonButton>

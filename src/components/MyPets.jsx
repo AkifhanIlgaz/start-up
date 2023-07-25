@@ -1,5 +1,8 @@
 import { IonAvatar, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList } from '@ionic/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Request from '../api/request'
+import { useRecoilState } from 'recoil'
+import userState from '../atoms/user'
 
 const Options = () => {
 	return (
@@ -12,25 +15,41 @@ const Options = () => {
 }
 
 const PetCard = ({ pet }) => {
-	console.log(pet)
 	return (
 		<IonItemSliding>
 			<IonItem>
 				<IonAvatar className="ion-no-padding">
-					<img src={pet.imgUrl} alt="" />
+					<img src={pet.data.photoURL} alt="" />
 				</IonAvatar>
-				<span style={{ marginLeft: '1rem' }}>{pet.name}</span>
+				<span style={{ marginLeft: '1rem' }}>{pet.data.name}</span>
 			</IonItem>
 			<Options />
 		</IonItemSliding>
 	)
 }
 
-const MyPets = ({ pets }) => {
+const MyPets = () => {
+	const [user, setUser] = useRecoilState(userState)
+	const [pets, setPets] = useState([])
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const req = new Request()
+				const res = await req.getPets(user.uid)
+				setPets(res)
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
+		fetchData()
+	}, [])
+
 	return (
 		<IonList>
 			{pets.map(pet => (
-				<PetCard key={pet.imgURL} pet={pet} />
+				<PetCard key={user.uid} pet={pet} />
 			))}
 		</IonList>
 	)

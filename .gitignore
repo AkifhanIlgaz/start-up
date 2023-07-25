@@ -31,4 +31,3 @@ yarn-error.log*
 # Config
 src/config.js
 notes.md
-mockUser.js

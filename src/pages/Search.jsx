@@ -18,6 +18,22 @@ export const Search = () => {
 
 	let newMap
 
+	const [pets, setPets] = useState([])
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const req = new Request()
+			const pets = await req.getDocuments('pets')
+			console.log(pets)
+			const coordinates = await Geolocation.getCurrentPosition()
+			pets.sort((a, b) => calcCrow(coordinates.latitude, coordinates.longitude, a.lat, a.long) - calcCrow(coordinates.latitude, coordinates.longitude, b.lat, b.long))
+			setPets(pets)
+			console.log(pets)
+		}
+
+		fetchData()
+	}, [])
+
 	const markerClicked = e => {
 		console.log(e)
 	}
@@ -47,7 +63,15 @@ export const Search = () => {
 					},
 					title: 'BAŞLIK',
 					snippet: 'AÇIKLAMA'
-				}
+				},
+				pets.map(pet => {
+					return {
+						coordinate: {
+							lat: pet.lat,
+							long: pet.long
+						}
+					}
+				})
 			])
 			await newMap.setOnMarkerClickListener(e => {
 				markerClicked(e)

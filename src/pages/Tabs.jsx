@@ -18,7 +18,7 @@ const Tabs = () => {
 					<Route path="/search" render={() => <Search />} exact={true} />
 					<Route path="/history" render={() => <Profile />} exact={true} />
 					<Route path="/profile" render={() => <Profile />} exact={true} />
-					<Route path="/edit-pet" render={() => <Profile />} exact={true} />
+					<Route path="/edit-pet" render={() => <Home />} exact={true} />
 				</IonRouterOutlet>
 				<IonTabBar slot="bottom">
 					<IonTabButton tab="home" href="/home">

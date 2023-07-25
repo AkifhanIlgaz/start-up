@@ -27,7 +27,6 @@ const AddPet = ({ isOpen, setIsOpen }) => {
 
 	const onSubmit = async data => {
 		data = { ...data, userId: user.uid, photoURL: downloadURL }
-		console.log(data)
 		const req = new Request()
 		await req.addDocument('pets', data)
 	}
@@ -38,7 +37,6 @@ const AddPet = ({ isOpen, setIsOpen }) => {
 			setLoading(true)
 			const req = new Request()
 			const downloadURL = await req.uploadFile(`${user.uid}/pets`, file)
-			const res = await req.setDocument('pets', user.uid, { ...user, photoURL: downloadURL })
 			setDownloadURL(downloadURL)
 			setLoading(false)
 		} catch (error) {
@@ -102,7 +100,6 @@ const AddPet = ({ isOpen, setIsOpen }) => {
 											</IonButton>
 										</IonCol>
 									</IonRow>
-
 									<IonRow className="ion-align-items-center">
 										<IonCol className="ion-no-padding"></IonCol>
 									</IonRow>

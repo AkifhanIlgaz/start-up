@@ -5,9 +5,11 @@ import { useIntl } from 'react-intl'
 import { useRecoilState } from 'recoil'
 import userState from '../atoms/user'
 import Request from '../api/request'
+import { useHistory } from 'react-router'
 
 const AddPet = ({ isOpen, setIsOpen }) => {
 	const [user, setUser] = useRecoilState(userState)
+	const history = useHistory()
 
 	const [downloadURL, setDownloadURL] = useState(null)
 	const [loading, setLoading] = useState(false)
@@ -66,29 +68,6 @@ const AddPet = ({ isOpen, setIsOpen }) => {
 								<IonCardContent className="card-content">
 									<IonRow className="ion-align-items-center">
 										<IonCol className="ion-padding-top">
-											{/* {!downloadURL && (
-												<IonRow className="ion-align-items-center">
-													<IonCol className="ion-no-padding">
-														{!loading && (
-															<div onClick={() => click()}>
-																<div>
-																	Fotoğraf Yükle
-																	<input type="file" onChange={handleFileUpload} ref={upload} style={{ display: 'none' }} />
-																</div>
-															</div>
-														)}
-														{loading && <div>Fotoğraf Yükleniyor...</div>}
-													</IonCol>
-												</IonRow>
-											)}
-											{downloadURL && (
-												<IonRow>
-													<IonCol className="auth-card">
-														<IonLabel color="success">Yüklendi!</IonLabel>
-														<img src={downloadURL} alt="" style={{ width: '50px' }} />
-													</IonCol>
-												</IonRow>
-											)} */}
 											{!downloadURL && (
 												<IonRow className="ion-align-items-center">
 													<IonCol className="ion-no-padding">
@@ -118,7 +97,7 @@ const AddPet = ({ isOpen, setIsOpen }) => {
 											<IonInput label={formatMessage('Age')} type="number" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-bottom" {...register('age', { required: true })}></IonInput>
 											<IonInput label={formatMessage('Info')} type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-bottom" {...register('info', { required: true })}></IonInput>
 											<IonInput label={formatMessage('Vaccines')} type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-bottom" {...register('vaccines', { required: true })}></IonInput>
-											<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary">
+											<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" onClick={() => setIsOpen(false)}>
 												<span>{formatMessage('Add')}</span>
 											</IonButton>
 										</IonCol>

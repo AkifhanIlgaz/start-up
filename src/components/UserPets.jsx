@@ -5,20 +5,15 @@ import { useRecoilState } from 'recoil'
 import userState from '../atoms/user'
 import PetCard from './PetCard'
 
-const MyPets = ({ user }) => {
+const UserPets = ({ user }) => {
 	const [pets, setPets] = useState([])
 	const [isOpen, setIsOpen] = useState(false)
-
-	const deletePet = async id => {
-		const req = new Request()
-		await req.deleteDocument('pets', id)
-	}
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const req = new Request()
-				const res = await req.getPets(user.uid)
+				const res = await req.getPets(user.id)
 				setPets(res)
 			} catch (error) {
 				console.log(error)
@@ -60,12 +55,6 @@ const MyPets = ({ user }) => {
 									</IonGrid>
 								</IonModal>
 							</IonItemOption>
-							<IonItemOption color={'success'}>
-								<IonButton onClick={() => console.log('edit pet')}>Edit</IonButton>
-							</IonItemOption>
-							<IonItemOption color={'danger'}>
-								<IonButton onClick={() => deletePet(pet.id)}>Delete</IonButton>
-							</IonItemOption>
 						</IonItemOptions>
 					</IonItemSliding>
 				</div>
@@ -74,4 +63,4 @@ const MyPets = ({ user }) => {
 	)
 }
 
-export default MyPets
+export default UserPets

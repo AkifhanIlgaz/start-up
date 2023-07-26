@@ -1,4 +1,4 @@
- const mockUsers = [
+const mockUsers = [
 	{
 		uid: '64bfc454fc13ae6d735da9a4',
 		userName: "Barnabe O'Gavin",
@@ -135,4 +135,3 @@
 		long: -81.5596427
 	}
 ]
-

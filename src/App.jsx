@@ -28,34 +28,48 @@ import PasswordReset from './pages/PasswordReset'
 import Profile from './pages/Profile'
 import Search from './pages/Search'
 import SignUp from './pages/SignUp'
+import UserProfile from './pages/UserProfile'
+import { useRecoilState } from 'recoil'
+import userState from './atoms/user'
 setupIonicReact()
 
 const App = () => {
 	const locale = Locales['tr']
+	const [user, setUser] = useRecoilState(userState)
 
 	return (
 		<IonApp>
 			<IntlProvider locale={locale.code} messages={locale.messages} onError={error => error.code === 'MISSING_TRANSLATION'} defaultLocale="tr">
 				<IonReactRouter>
 					<IonRouterOutlet>
-						<Route exact path="/">
-							<Redirect to="/home"></Redirect>
-						</Route>
-						<Route exact path="/signin">
-							<SignIn />
-						</Route>
-						<Route exact path="/signup">
-							<SignUp />
-						</Route>
-						<Route exact path="/password-reset">
-							<PasswordReset />
-						</Route>
-						<Route exact path="/profile">
-							<Profile />
-						</Route>
-						<Route exact path="/search">
-							<Search />
-						</Route>
+						{user ? (
+							<>
+								<Route exact path="/">
+									<Redirect to="/home"></Redirect>
+								</Route>
+								<Route path={['/signin', '/signup', '/password-reset']}>
+									<Redirect to="/home"></Redirect>
+								</Route>
+								<Route path="/user/*">
+									<UserProfile />
+								</Route>
+							</>
+						) : (
+							<>
+								<Route path="/">
+									<Redirect to="/signin"></Redirect>
+								</Route>
+								<Route exact path="/signin">
+									<SignIn />
+								</Route>
+								<Route exact path="/signup">
+									<SignUp />
+								</Route>
+								<Route exact path="/password-reset">
+									<PasswordReset />
+								</Route>
+							</>
+						)}
 					</IonRouterOutlet>
 					<Tabs />
 				</IonReactRouter>

@@ -7,6 +7,15 @@ import { query, where, getDocs } from 'firebase/firestore'
 
 firebase.initializeApp(firebaseConfig)
 
+export class MatchRequest {
+	constructor(from, to, status, id) {
+		this.from = from
+		this.to = to
+		this.status = status
+		this.id = id
+	}
+}
+
 class Request {
 	constructor() {
 		this.auth = firebase.auth()
@@ -222,17 +231,30 @@ class Request {
 	}
 
 	async getPets(userId) {
-		const myPets = []
 		try {
 			const petsRef = this.firestore.collection('pets')
 			const snapshot = await petsRef.where('userId', '==', userId).get()
-			snapshot.forEach(pet => {
-				myPets.push({
+			return snapshot.docs.map(pet => {
+				return {
 					id: pet.id,
 					...pet.data()
-				})
+				}
 			})
-			return myPets
+		} catch (error) {
+			throw error
+		}
+	}
+
+	async getMatchRequests(userId, status) {
+		try {
+			const requestsRef = this.firestore.collection('matchRequests')
+			const snapshot = await requestsRef.where('from', '==', userId).get()
+			return snapshot.docs.map(request => {
+				return {
+					id: request.id,
+					...request.data()
+				}
+			})
 		} catch (error) {
 			throw error
 		}

@@ -24,7 +24,7 @@ export const MyProfile = () => {
 
 	const [user, setUser] = useRecoilState(userState)
 	const [downloadURL, setDownloadURL] = useState(null)
-	const [lastSegment, setLastSegment] = useState(null)
+	const [lastSegment, setLastSegment] = useState('pets')
 
 	const [loading, setLoading] = useState(false)
 
@@ -78,7 +78,7 @@ export const MyProfile = () => {
 				<span>{user.username}</span>
 			</div>
 			<IonToolbar color={'transparent'}>
-				<IonSegment onIonChange={e => setLastSegment(e.detail.value)}>
+				<IonSegment value={lastSegment} onIonChange={e => setLastSegment(e.detail.value)}>
 					<IonSegmentButton value="pets">
 						<IonLabel>Pets</IonLabel>
 					</IonSegmentButton>

@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil'
 import { userState } from '../atoms/user'
 import UserProfile from './UserProfile'
 import MyProfile from './MyProfile'
+import Notifications from './Notifications'
 
 const Tabs = () => {
 	const [user, setUser] = useRecoilState(userState)
@@ -17,7 +18,7 @@ const Tabs = () => {
 				<IonRouterOutlet>
 					<Route path="/home" render={() => <Home />} exact={true} />
 					<Route path="/search" render={() => <Search />} exact={true} />
-					<Route path="/history" render={() => <MyProfile />} exact={true} />
+					<Route path="/notifications" render={() => <Notifications />} exact={true} />
 					<Route path="/me" render={() => <MyProfile />} exact={true} />
 					<Route path="/users/:id" render={() => <UserProfile />} />
 				</IonRouterOutlet>
@@ -29,7 +30,7 @@ const Tabs = () => {
 						<IonIcon icon={earth}></IonIcon>
 					</IonTabButton>
 					{/* Notifications && Messages */}
-					<IonTabButton tab="history" href="/history">
+					<IonTabButton tab="notifications" href="/notifications">
 						<IonIcon icon={notificationsOutline}></IonIcon>
 					</IonTabButton>
 					<IonTabButton tab="profile" href="/me">

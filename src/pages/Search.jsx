@@ -53,7 +53,7 @@ export const Search = () => {
 						lat: pet.lat,
 						lng: pet.long
 					},
-					title: pet.name 
+					title: pet.name
 				})
 			})
 			console.log('Pets', pets.length)

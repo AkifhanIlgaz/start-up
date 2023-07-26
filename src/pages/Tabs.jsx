@@ -18,8 +18,8 @@ const Tabs = () => {
 					<Route path="/home" render={() => <Home />} exact={true} />
 					<Route path="/search" render={() => <Search />} exact={true} />
 					<Route path="/history" render={() => <MyProfile />} exact={true} />
-					<Route path="/users/me" render={() => <MyProfile />} exact={true} />
-					<Route path="/users/:id" render={() => <UserProfile />}  />
+					<Route path="/me" render={() => <MyProfile />} exact={true} />
+					<Route path="/users/:id" render={() => <UserProfile />} />
 				</IonRouterOutlet>
 				<IonTabBar slot="bottom">
 					<IonTabButton tab="home" href="/home">
@@ -32,7 +32,7 @@ const Tabs = () => {
 					<IonTabButton tab="history" href="/history">
 						<IonIcon icon={notificationsOutline}></IonIcon>
 					</IonTabButton>
-					<IonTabButton tab="profile" href="/users/me">
+					<IonTabButton tab="profile" href="/me">
 						<IonIcon icon={personOutline}></IonIcon>
 					</IonTabButton>
 				</IonTabBar>

@@ -39,6 +39,7 @@ export const UserProfile = () => {
 
 	return (
 		<Authorized>
+			<span>User Profile</span>
 			<div className="ion-text-center">
 				<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ borderRadius: '50%', width: '50%' }} />
 			</div>

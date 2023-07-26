@@ -46,22 +46,22 @@ export const Search = () => {
 					title: 'Me'
 				}
 			]
+
 			pets.forEach(pet => {
 				markers.push({
 					coordinate: {
 						lat: pet.lat,
 						lng: pet.long
 					},
-					title: pet.ownerName
+					title: pet.name 
 				})
 			})
+			console.log('Pets', pets.length)
+			console.log('Markers', markers.length)
 			// TODO => Pop up info window on click marker
 			newMap.addMarkers(markers)
 			await newMap.setOnMarkerClickListener(e => {
-				// const infoWindow = new google.maps.InfoWindow({
-				// 	content: e.title
-				// })
-				// infoWindow.open()
+				console.log(e.title)
 			})
 		}
 		loadMap()

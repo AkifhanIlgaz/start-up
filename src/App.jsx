@@ -1,6 +1,6 @@
 import { IonApp, IonButton, setupIonicReact } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { Route } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/display.css'
@@ -38,6 +38,9 @@ const App = () => {
 			<IntlProvider locale={locale.code} messages={locale.messages} onError={error => error.code === 'MISSING_TRANSLATION'} defaultLocale="tr">
 				<IonReactRouter>
 					<IonRouterOutlet>
+						<Route exact path="/">
+							<Redirect to="/home"></Redirect>
+						</Route>
 						<Route exact path="/signin">
 							<SignIn />
 						</Route>

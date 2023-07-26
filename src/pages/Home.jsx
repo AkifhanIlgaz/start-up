@@ -6,7 +6,7 @@ import Request from '../api/request'
 import { useEffect, useState } from 'react'
 import { Geolocation } from '@capacitor/geolocation'
 
-function distance(lat1, lon1, lat2, lon2, unit) {
+function distance(lat1, lon1, lat2, lon2) {
 	if (lat1 == lat2 && lon1 == lon2) {
 		return 0
 	} else {
@@ -33,7 +33,7 @@ export const Home = () => {
 			const req = new Request()
 			const petsRes = await req.getDocuments('pets')
 			const coordinates = await Geolocation.getCurrentPosition()
-			petsRes.sort((a, b) => distance(coordinates.coords.latitude, coordinates.coords.longitude, a.lat, a.long, 'K') - distance(coordinates.coords.latitude, coordinates.coords.longitude, b.lat, b.long, 'K'))
+			petsRes.sort((a, b) => distance(coordinates.coords.latitude, coordinates.coords.longitude, a.lat, a.long) - distance(coordinates.coords.latitude, coordinates.coords.longitude, b.lat, b.long))
 			setPets(petsRes)
 		}
 

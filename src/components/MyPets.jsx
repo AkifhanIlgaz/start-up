@@ -20,6 +20,7 @@ const MyPets = () => {
 			try {
 				const req = new Request()
 				const res = await req.getPets(user.uid)
+				console.log(res)
 				setPets(res)
 			} catch (error) {
 				console.log(error)

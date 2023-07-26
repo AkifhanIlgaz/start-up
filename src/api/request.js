@@ -225,7 +225,7 @@ class Request {
 		const myPets = []
 		try {
 			const petsRef = this.firestore.collection('pets')
-			const snapshot = await petsRef.where('ownerId', '==', userId).get()
+			const snapshot = await petsRef.where('userId', '==', userId).get()
 			snapshot.forEach(pet => {
 				myPets.push({
 					id: pet.id,

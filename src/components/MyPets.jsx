@@ -5,7 +5,8 @@ import { useRecoilState } from 'recoil'
 import userState from '../atoms/user'
 import PetCard from './PetCard'
 
-const MyPets = ({ user }) => {
+const MyPets = () => {
+	const [user, setUser] = useRecoilState(userState)
 	const [pets, setPets] = useState([])
 	const [isOpen, setIsOpen] = useState(false)
 

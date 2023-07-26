@@ -12,11 +12,12 @@ import Tabs from './Tabs'
 import PetCard from '../components/PetCard'
 import MyPets from '../components/MyPets'
 import { set } from 'lodash'
+import { useHistory } from 'react-router'
 
 const defaultImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtMHFQmELtQP7GiQrvpYQQVYIU_2ZoF-n-I3CqhOs9qaetDVhykH1PSmMSlfD5nCklxY&usqp=CAU'
 
 export const MyProfile = () => {
-	console.log(window.location)
+	const history = useHistory()
 	const intl = useIntl()
 
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
@@ -58,6 +59,14 @@ export const MyProfile = () => {
 
 	const click = () => {
 		upload.current.click()
+	}
+
+	const signOut = async () => {
+		const req = new Request()
+		const res = await req.signOut()
+		console.log(res)
+		setUser(res)
+		history.push('/home')
 	}
 
 	return (
@@ -110,6 +119,7 @@ export const MyProfile = () => {
 					)}
 				</IonCardContent>
 			</IonCard>
+			<IonButton onClick={signOut}>Sign Out</IonButton>
 		</Authorized>
 	)
 }

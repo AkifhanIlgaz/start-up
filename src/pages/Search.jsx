@@ -56,8 +56,7 @@ export const Search = () => {
 					title: pet.name
 				})
 			})
-			console.log('Pets', pets.length)
-			console.log('Markers', markers.length)
+
 			// TODO => Pop up info window on click marker
 			newMap.addMarkers(markers)
 			await newMap.setOnMarkerClickListener(e => {

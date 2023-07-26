@@ -33,7 +33,12 @@ export const Home = () => {
 			const req = new Request()
 			const petsRes = await req.getDocuments('pets')
 			const coordinates = await Geolocation.getCurrentPosition()
+
 			petsRes.sort((a, b) => distance(coordinates.coords.latitude, coordinates.coords.longitude, a.lat, a.long) - distance(coordinates.coords.latitude, coordinates.coords.longitude, b.lat, b.long))
+			petsRes.forEach(pet => {
+				console.log(`Distance: ${distance(coordinates.coords.latitude, coordinates.coords.longitude, pet.lat, pet.long)}
+				Pet: ${pet.name} `)
+			})
 			setPets(petsRes)
 		}
 

@@ -25,7 +25,6 @@ import Tabs from './pages/Tabs'
 import { IntlProvider } from 'react-intl'
 
 import PasswordReset from './pages/PasswordReset'
-import Profile from './pages/Profile'
 import Search from './pages/Search'
 import SignUp from './pages/SignUp'
 import UserProfile from './pages/UserProfile'
@@ -49,9 +48,6 @@ const App = () => {
 								</Route>
 								<Route path={['/signin', '/signup', '/password-reset']}>
 									<Redirect to="/home"></Redirect>
-								</Route>
-								<Route path="/user/*">
-									<UserProfile />
 								</Route>
 							</>
 						) : (

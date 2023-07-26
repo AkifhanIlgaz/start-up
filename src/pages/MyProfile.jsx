@@ -15,7 +15,8 @@ import { set } from 'lodash'
 
 const defaultImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtMHFQmELtQP7GiQrvpYQQVYIU_2ZoF-n-I3CqhOs9qaetDVhykH1PSmMSlfD5nCklxY&usqp=CAU'
 
-export const Profile = () => {
+export const MyProfile = () => {
+	console.log(window.location)
 	const intl = useIntl()
 
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
@@ -113,4 +114,4 @@ export const Profile = () => {
 	)
 }
 
-export default Profile
+export default MyProfile

@@ -7,7 +7,7 @@ const PetCard = ({ pet }) => {
 	const history = useHistory()
 
 	const goProfile = userId => {
-		history.push(`/user/${userId}`)
+		history.push(`/users/${userId}`)
 	}
 
 	return (

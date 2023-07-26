@@ -3,11 +3,11 @@ import { earth, homeOutline, notificationsOutline, personOutline } from 'ionicon
 import React from 'react'
 import { Route } from 'react-router-dom'
 import Home from './Home'
-import Profile from './Profile'
 import Search from './Search'
 import { useRecoilState } from 'recoil'
 import { userState } from '../atoms/user'
 import UserProfile from './UserProfile'
+import MyProfile from './MyProfile'
 
 const Tabs = () => {
 	const [user, setUser] = useRecoilState(userState)
@@ -17,9 +17,9 @@ const Tabs = () => {
 				<IonRouterOutlet>
 					<Route path="/home" render={() => <Home />} exact={true} />
 					<Route path="/search" render={() => <Search />} exact={true} />
-					<Route path="/history" render={() => <Profile />} exact={true} />
-					<Route path="/profile" render={() => <Profile />} exact={true} />
-					<Route path="/user/*" render={() => <UserProfile />} />
+					<Route path="/history" render={() => <MyProfile />} exact={true} />
+					<Route path="/users/me" render={() => <MyProfile />} exact={true} />
+					<Route path="/users/:id" render={() => <UserProfile />}  />
 				</IonRouterOutlet>
 				<IonTabBar slot="bottom">
 					<IonTabButton tab="home" href="/home">
@@ -32,7 +32,7 @@ const Tabs = () => {
 					<IonTabButton tab="history" href="/history">
 						<IonIcon icon={notificationsOutline}></IonIcon>
 					</IonTabButton>
-					<IonTabButton tab="profile" href="/profile">
+					<IonTabButton tab="profile" href="/users/me">
 						<IonIcon icon={personOutline}></IonIcon>
 					</IonTabButton>
 				</IonTabBar>

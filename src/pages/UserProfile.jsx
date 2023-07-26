@@ -13,11 +13,13 @@ import PetCard from '../components/PetCard'
 import MyPets from '../components/MyPets'
 import { set } from 'lodash'
 import UserPets from '../components/UserPets'
+import { useParams } from 'react-router'
 
 const defaultImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtMHFQmELtQP7GiQrvpYQQVYIU_2ZoF-n-I3CqhOs9qaetDVhykH1PSmMSlfD5nCklxY&usqp=CAU'
 
 export const UserProfile = () => {
 	const intl = useIntl()
+	let { id } = useParams()
 
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
 
@@ -26,15 +28,12 @@ export const UserProfile = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const req = new Request()
-			const res = await req.getDocument('users', window.location.pathname.split('/').at(-1))
-			if (Object.keys(user).length ===0) {
-                
-            }
+			const res = await req.getDocument('users', id)
 			setUser(res)
 		}
 
 		fetchData()
-	}, [])
+	}, [user])
 
 	const [lastSegment, setLastSegment] = useState('pets')
 

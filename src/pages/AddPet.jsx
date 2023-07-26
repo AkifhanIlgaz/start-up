@@ -26,7 +26,7 @@ const AddPet = ({ isOpen, setIsOpen }) => {
 	} = useForm()
 
 	const onSubmit = async data => {
-		data = { ...data, userId: user.uid, photoURL: downloadURL }
+		data = { ...data, ownerId: user.uid, photoURL: downloadURL }
 		const req = new Request()
 		await req.addDocument('pets', data)
 	}

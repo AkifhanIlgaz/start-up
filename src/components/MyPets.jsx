@@ -4,11 +4,13 @@ import Request from '../api/request'
 import { useRecoilState } from 'recoil'
 import userState from '../atoms/user'
 import PetCard from './PetCard'
+import EditPet from './EditPet'
 
 const MyPets = () => {
 	const [user, setUser] = useRecoilState(userState)
 	const [pets, setPets] = useState([])
-	const [isOpen, setIsOpen] = useState(false)
+	const [isInfoOpen, setIsInfoOpen] = useState(false)
+	const [isEditPetOpen, setIsEditPetOpen] = useState(false)
 
 	const deletePet = async id => {
 		const req = new Request()
@@ -42,13 +44,13 @@ const MyPets = () => {
 						</IonItem>
 						<IonItemOptions>
 							<IonItemOption color={'primary'}>
-								<IonButton onClick={() => setIsOpen(true)}>Info</IonButton>
-								<IonModal isOpen={isOpen}>
+								<IonButton onClick={() => setIsInfoOpen(true)}>Info</IonButton>
+								<IonModal isOpen={isInfoOpen}>
 									<IonHeader>
 										<IonToolbar>
 											<IonButtons slot="end">
 												<IonTitle>{pet.name}</IonTitle>
-												<IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+												<IonButton onClick={() => setIsInfoOpen(false)}>Close</IonButton>
 											</IonButtons>
 										</IonToolbar>
 									</IonHeader>
@@ -62,7 +64,8 @@ const MyPets = () => {
 								</IonModal>
 							</IonItemOption>
 							<IonItemOption color={'success'}>
-								<IonButton onClick={() => console.log('edit pet')}>Edit</IonButton>
+								<EditPet isEditPetOpen={isEditPetOpen} setIsEditPetOpen={setIsEditPetOpen} currentPet={pet} />
+								<IonButton onClick={() => setIsEditPetOpen(true)}>Edit</IonButton>
 							</IonItemOption>
 							<IonItemOption color={'danger'}>
 								<IonButton onClick={() => deletePet(pet.id)}>Delete</IonButton>

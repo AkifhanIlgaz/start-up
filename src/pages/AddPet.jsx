@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonLabel, IonList, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
 import React, { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
@@ -6,8 +6,10 @@ import { useRecoilState } from 'recoil'
 import userState from '../atoms/user'
 import Request from '../api/request'
 import { useHistory } from 'react-router'
+import catTypes from '../api/catTypes'
+import { cloudUploadOutline } from 'ionicons/icons'
 
-const AddPet = ({ isOpen, setIsOpen }) => {
+const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 	const [user, setUser] = useRecoilState(userState)
 	const history = useHistory()
 
@@ -27,6 +29,7 @@ const AddPet = ({ isOpen, setIsOpen }) => {
 
 	const onSubmit = async data => {
 		data = { ...data, ownerId: user.uid, photoURL: downloadURL }
+		// TODO Add location to pet
 		const req = new Request()
 		await req.addDocument('pets', data)
 	}
@@ -49,66 +52,115 @@ const AddPet = ({ isOpen, setIsOpen }) => {
 	}
 
 	return (
-		<IonModal isOpen={isOpen}>
+		<IonModal isOpen={isAddPetOpen}>
 			<IonHeader>
 				<IonToolbar>
 					<IonTitle>Add Pet</IonTitle>
 					<IonButtons slot="end">
-						<IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+						<IonButton onClick={() => setIsAddPetOpen(false)}>Close</IonButton>
 					</IonButtons>
 				</IonToolbar>
 			</IonHeader>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<IonGrid className="ion-align-items-center ion-justify-content-center ion-height ">
-					<IonRow className="ion-align-items-center ion-justify-content-center ion-height">
-						<IonCol size="12" size-md="6" size-lg="4">
-							<IonCard className="ion-transparent">
-								<IonCardContent className="card-content">
-									<IonRow className="ion-align-items-center">
-										<IonCol className="ion-padding-top">
-											{!downloadURL && (
-												<IonRow className="ion-align-items-center">
-													<IonCol className="ion-no-padding">
-														{!loading && (
-															<div onClick={() => click()}>
-																<div>
-																	<IonButton>Add Pet Image</IonButton>
-																	<input style={{ display: 'none' }} type="file" onChange={handleFileUpload} ref={upload} className="ion-input" />
-																</div>
-															</div>
-														)}
-													</IonCol>
-												</IonRow>
-											)}
-											{downloadURL && (
-												<IonRow>
-													<IonCol className="auth-card">
-														<IonLabel color="success">Yüklendi!</IonLabel>
-														<img src={downloadURL} alt="" style={{ width: '50px' }} />
-													</IonCol>
-												</IonRow>
-											)}
+			<IonGrid className="ion-no-margin">
+				<IonRow>
+					<IonCol>
+						<form onSubmit={handleSubmit(onSubmit)}>
+							<IonList lines="full">
+								<IonItem>
+									{!downloadURL && !loading && (
+										<div onClick={() => click()}>
+											<div>
+												<IonButton>
+													Add Pet Image
+													<IonIcon icon={cloudUploadOutline} slot="end"></IonIcon>
+												</IonButton>
+												<input style={{ display: 'none' }} type="file" onChange={handleFileUpload} ref={upload} />
+											</div>
+										</div>
+									)}
+									{downloadURL && (
+										<div>
+											<IonRow>
+												<IonCol>
+													<img src={downloadURL} alt="" style={{ width: '100px', borderRadius: '50%' }} />
+												</IonCol>
+											</IonRow>
 
-											<IonInput label={formatMessage('Name')} type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input  ion-margin-bottom" {...register('name', { required: true })}></IonInput>
-											<IonInput label={formatMessage('Type')} type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-bottom" {...register('type', { required: true })}></IonInput>
-											<IonInput label={formatMessage('Gender')} type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-bottom" {...register('gender', { required: true })}></IonInput>
-											<IonInput label={formatMessage('Age')} type="number" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-bottom" {...register('age', { required: true })}></IonInput>
-											<IonInput label={formatMessage('Info')} type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-bottom" {...register('info', { required: true })}></IonInput>
-											<IonInput label={formatMessage('Vaccines')} type="text" labelPlacement="floating" className="ion-padding-start ion-padding-end ion-input ion-margin-bottom" {...register('vaccines', { required: true })}></IonInput>
-											<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" onClick={() => setIsOpen(false)}>
-												<span>{formatMessage('Add')}</span>
-											</IonButton>
-										</IonCol>
-									</IonRow>
-									<IonRow className="ion-align-items-center">
-										<IonCol className="ion-no-padding"></IonCol>
-									</IonRow>
-								</IonCardContent>
-							</IonCard>
-						</IonCol>
-					</IonRow>
-				</IonGrid>
-			</form>
+											<div onClick={() => click()}>
+												<IonButton>
+													Add Pet Image
+													<IonIcon icon={cloudUploadOutline} slot="end"></IonIcon>
+												</IonButton>
+												<input style={{ display: 'none' }} type="file" onChange={handleFileUpload} ref={upload} />
+												{/* <IonAvatar className="ion-margin-end">
+												<img src={downloadURL} alt="" style={{ width: '50px' }} />
+											</IonAvatar>
+											<IonLabel color="success">Yüklendi!</IonLabel> */}
+											</div>
+										</div>
+									)}
+								</IonItem>
+								<IonItem>
+									<IonInput placeholder={formatMessage('Name')} aria-label={formatMessage('Name')} type="text" {...register('name', { required: true })}></IonInput>
+								</IonItem>
+								<IonItem>
+									<IonLabel
+										style={{
+											color: '#8e8e8e'
+										}}
+									>
+										{formatMessage('Type')}
+									</IonLabel>
+									<IonSelect {...register('type', { required: true })} interface="action-sheet">
+										{catTypes.map(type => {
+											return <IonSelectOption value={type}>{type}</IonSelectOption>
+										})}
+									</IonSelect>
+								</IonItem>
+								<IonItem>
+									<IonLabel
+										style={{
+											color: '#8e8e8e'
+										}}
+									>
+										{formatMessage('Gender')}
+									</IonLabel>
+									<IonSelect {...register('gender', { required: true })} interface="action-sheet">
+										<IonSelectOption value={'Erkek'}>Erkek</IonSelectOption>
+										<IonSelectOption value={'Dişi'}>Dişi</IonSelectOption>
+									</IonSelect>
+								</IonItem>
+								<IonItem>
+									<IonLabel
+										style={{
+											color: '#8e8e8e'
+										}}
+									>
+										{formatMessage('Vaccines')}
+									</IonLabel>
+									<IonSelect {...register('vaccines', { required: true })} interface="action-sheet">
+										<IonSelectOption value={'Tam'} color="success">
+											Tam
+										</IonSelectOption>
+										<IonSelectOption value={'Eksik'} color="danger">
+											Eksik
+										</IonSelectOption>
+									</IonSelect>
+								</IonItem>
+								<IonItem>
+									<IonInput placeholder={formatMessage('Age')} aria-label={formatMessage('Age')} type="number" {...register('age', { required: true })}></IonInput>
+								</IonItem>
+								<IonItem>
+									<IonInput placeholder={formatMessage('Info')} aria-label={formatMessage('Info')} type="text" {...register('info', { required: true })}></IonInput>
+								</IonItem>
+							</IonList>
+							<IonButton className="ion-margin-top " type="submit" expand="block" color="secondary" onClick={() => setIsAddPetOpen(false)}>
+								<span>{formatMessage('Add')}</span>
+							</IonButton>
+						</form>
+					</IonCol>
+				</IonRow>
+			</IonGrid>
 		</IonModal>
 	)
 }

@@ -34,7 +34,7 @@ export const Home = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const req = new Request()
-			const petsRes = (await req.getDocuments('pets')).filter(pet => pet.userId != user.uid)
+			const petsRes = (await req.getDocuments('pets')).filter(pet => pet.ownerId != user.uid)
 			const coordinates = await Geolocation.getCurrentPosition()
 
 			petsRes.sort((a, b) => distance(coordinates.coords.latitude, coordinates.coords.longitude, a.lat, a.long) - distance(coordinates.coords.latitude, coordinates.coords.longitude, b.lat, b.long))

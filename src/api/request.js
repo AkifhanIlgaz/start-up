@@ -7,6 +7,8 @@ import { query, where, getDocs } from 'firebase/firestore'
 
 firebase.initializeApp(firebaseConfig)
 
+export const MatchRequestCollection = 'matchRequests'
+
 export class MatchRequest {
 	constructor(from, to, status, id) {
 		this.from = from
@@ -233,7 +235,7 @@ class Request {
 	async getPets(userId) {
 		try {
 			const petsRef = this.firestore.collection('pets')
-			const snapshot = await petsRef.where('userId', '==', userId).get()
+			const snapshot = await petsRef.where('ownerId', '==', userId).get()
 			return snapshot.docs.map(pet => {
 				return {
 					id: pet.id,

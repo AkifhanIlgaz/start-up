@@ -91,74 +91,76 @@ export const MyProfile = () => {
 
 	return (
 		<Authorized>
-			<div className="ion-text-center">
-				<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ borderRadius: '50%', width: '50%' }} />
-			</div>
-			<div className="ion-text-center ion-padding-top">
-				<span>{user.username}</span>
-			</div>
-			<IonToolbar color={'transparent'}>
-				<IonSegment value={lastSegment} onIonChange={e => setLastSegment(e.detail.value)}>
-					<IonSegmentButton value="pets">
-						<IonLabel>Pets</IonLabel>
-					</IonSegmentButton>
-					<IonSegmentButton value="favorites">
-						<IonLabel>History</IonLabel>
-					</IonSegmentButton>
-				</IonSegment>
-			</IonToolbar>
-			{lastSegment == 'pets' ? <MyPets user={user} /> : <div>History</div>}
-			<EditProfile isEditProfileOpen={isEditProfileOpen} setIsEditProfileOpen={setIsEditProfileOpen}></EditProfile>
-			<AddPet isAddPetOpen={isAddPetOpen} setIsAddPetOpen={setIsAddPetOpen} />
-			<IonCard>
-				<IonCardContent>
-					{!downloadURL && (
-						<IonRow className="ion-align-items-center">
-							<IonCol className="ion-no-padding">
-								{!loading && (
-									<div onClick={() => click()}>
-										<div>
-											Fotoğraf Yükle
-											<input type="file" onChange={handleFileUpload} ref={upload} style={{ display: 'none' }} />
+			<div className="ion-padding-top">
+				<div className="ion-text-center">
+					<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ borderRadius: '50%', width: '50%' }} />
+				</div>
+				<div className="ion-text-center ion-padding-top">
+					<span>{user.username}</span>
+				</div>
+				<IonToolbar color={'transparent'}>
+					<IonSegment value={lastSegment} onIonChange={e => setLastSegment(e.detail.value)}>
+						<IonSegmentButton value="pets">
+							<IonLabel>Pets</IonLabel>
+						</IonSegmentButton>
+						<IonSegmentButton value="favorites">
+							<IonLabel>History</IonLabel>
+						</IonSegmentButton>
+					</IonSegment>
+				</IonToolbar>
+				{lastSegment == 'pets' ? <MyPets user={user} /> : <div>History</div>}
+				<EditProfile isEditProfileOpen={isEditProfileOpen} setIsEditProfileOpen={setIsEditProfileOpen}></EditProfile>
+				<AddPet isAddPetOpen={isAddPetOpen} setIsAddPetOpen={setIsAddPetOpen} />
+				<IonCard>
+					<IonCardContent>
+						{!downloadURL && (
+							<IonRow className="ion-align-items-center">
+								<IonCol className="ion-no-padding">
+									{!loading && (
+										<div onClick={() => click()}>
+											<div>
+												Fotoğraf Yükle
+												<input type="file" onChange={handleFileUpload} ref={upload} style={{ display: 'none' }} />
+											</div>
 										</div>
-									</div>
-								)}
-								{loading && <div>Fotoğraf Yükleniyor...</div>}
-							</IonCol>
-						</IonRow>
-					)}
-					{downloadURL && (
-						<IonRow>
-							<IonCol className="auth-card">
-								<IonLabel color="success">Yüklendi!</IonLabel>
-								<img src={downloadURL} alt="" style={{ width: '50px' }} />
-							</IonCol>
-						</IonRow>
-					)}
-				</IonCardContent>
-			</IonCard>
+									)}
+									{loading && <div>Fotoğraf Yükleniyor...</div>}
+								</IonCol>
+							</IonRow>
+						)}
+						{downloadURL && (
+							<IonRow>
+								<IonCol className="auth-card">
+									<IonLabel color="success">Yüklendi!</IonLabel>
+									<img src={downloadURL} alt="" style={{ width: '50px' }} />
+								</IonCol>
+							</IonRow>
+						)}
+					</IonCardContent>
+				</IonCard>
 
-			<IonFab slot="fixed" vertical="bottom" horizontal="start">
-				<IonFabButton onClick={() => setIsAddPetOpen(true)}>
-					<IonIcon icon={addOutline}></IonIcon>
-				</IonFabButton>
-			</IonFab>
-			<IonFab slot="fixed" vertical="bottom" horizontal="end">
-				<IonFabButton>
-					<IonIcon icon={settingsOutline}></IonIcon>
-				</IonFabButton>
-				<IonFabList side="top">
-					<IonFabButton color={'primary'} onClick={signOut}>
-						<IonIcon icon={logOutOutline}></IonIcon>
+				<IonFab slot="fixed" vertical="bottom" horizontal="start">
+					<IonFabButton onClick={() => setIsAddPetOpen(true)}>
+						<IonIcon icon={addOutline}></IonIcon>
 					</IonFabButton>
-					<IonFabButton color={'success'} onClick={() => setIsEditProfileOpen(true)}>
-						<IonIcon icon={pencilOutline}></IonIcon>
+				</IonFab>
+				<IonFab slot="fixed" vertical="bottom" horizontal="end">
+					<IonFabButton>
+						<IonIcon icon={settingsOutline}></IonIcon>
 					</IonFabButton>
-					<IonFabButton color={'danger'} onClick={deleteAccount}>
-						<IonIcon icon={trashOutline}></IonIcon>
-					</IonFabButton>
-				</IonFabList>
-			</IonFab>
+					<IonFabList side="top">
+						<IonFabButton color={'primary'} onClick={signOut}>
+							<IonIcon icon={logOutOutline}></IonIcon>
+						</IonFabButton>
+						<IonFabButton color={'success'} onClick={() => setIsEditProfileOpen(true)}>
+							<IonIcon icon={pencilOutline}></IonIcon>
+						</IonFabButton>
+						<IonFabButton color={'danger'} onClick={deleteAccount}>
+							<IonIcon icon={trashOutline}></IonIcon>
+						</IonFabButton>
+					</IonFabList>
+				</IonFab>
+			</div>
 		</Authorized>
 	)
 }

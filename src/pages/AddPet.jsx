@@ -113,7 +113,11 @@ const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 									</IonLabel>
 									<IonSelect {...register('type', { required: true })} interface="action-sheet">
 										{catTypes.map(type => {
-											return <IonSelectOption value={type}>{type}</IonSelectOption>
+											return (
+												<IonSelectOption key={type} value={type}>
+													{type}
+												</IonSelectOption>
+											)
 										})}
 									</IonSelect>
 								</IonItem>

@@ -4,6 +4,9 @@ import React from 'react'
 export const Authorized = ({ children }) => {
 	return (
 		<IonPage>
+			<IonHeader>
+				<IonToolbar color={'danger'}>All header</IonToolbar>
+			</IonHeader>
 			<IonContent color="tertiary" className="ion-no-padding">
 				{children}
 			</IonContent>

@@ -2,22 +2,22 @@ import { IonContent, IonHeader, IonLabel, IonGrid, IonPage, IonSegment, IonSegme
 import React, { useState } from 'react'
 import SentRequests from '../components/SentRequests'
 import ReceivedRequests from '../components/ReceivedRequests'
+import Authorized from '../layouts/Authorized'
+
 const Notifications = () => {
 	const [segment, setSegment] = useState('sent')
 	return (
-		<IonPage>
-			<IonHeader>
-				<IonToolbar>
-					<IonSegment value={segment} onIonChange={e => setSegment(e.detail.value)}>
-						<IonSegmentButton value={'sent'}>
-							<IonLabel>Sent</IonLabel>
-						</IonSegmentButton>
-						<IonSegmentButton value={'received'}>
-							<IonLabel>Received</IonLabel>
-						</IonSegmentButton>
-					</IonSegment>
-				</IonToolbar>
-			</IonHeader>
+		<Authorized>
+			<IonToolbar className="ion-no-padding" color={'tertiary'}>
+				<IonSegment value={segment} onIonChange={e => setSegment(e.detail.value)}>
+					<IonSegmentButton value={'sent'}>
+						<IonLabel>Sent</IonLabel>
+					</IonSegmentButton>
+					<IonSegmentButton value={'received'}>
+						<IonLabel>Received</IonLabel>
+					</IonSegmentButton>
+				</IonSegment>
+			</IonToolbar>
 			<IonContent color="tertiary" className="ion-no-padding">
 				<IonGrid className="ion-align-items ion-justify-content-center ion-height ">
 					<IonRow className="ion-justify-content-center ion-height">
@@ -27,7 +27,7 @@ const Notifications = () => {
 					</IonRow>
 				</IonGrid>
 			</IonContent>
-		</IonPage>
+		</Authorized>
 	)
 }
 

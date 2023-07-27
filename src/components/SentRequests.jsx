@@ -21,7 +21,6 @@ const SentRequests = () => {
 
 	const fetchData = async () => {
 		const matchRequests = await req.getSentMatchRequests(user.uid, 'pending')
-		console
 		setRequests(matchRequests)
 	}
 
@@ -33,26 +32,23 @@ const SentRequests = () => {
 		<IonList>
 			{requests.map(request => {
 				return (
-					<div key={request.id}>
-						<IonItemSliding>
-							<IonItem>
-								<IonAvatar slot="start">
-									<img src={request.from.photo} alt="" />
-								</IonAvatar>
-								<IonIcon icon={heart}></IonIcon>
-								<IonAvatar>
-									<img src={request.to.photo} alt="" />
-								</IonAvatar>
-								<IonChip color="warning">{request.status}</IonChip>
-								<IonChip>{request.id}</IonChip>
-							</IonItem>
-							<IonItemOptions side="end">
-								<IonItemOption color={'danger'}>
-									<IonIcon slot="icon-only" icon={trash} onClick={() => deleteRequest(request.id)}></IonIcon>
-								</IonItemOption>
-							</IonItemOptions>
-						</IonItemSliding>
-					</div>
+					<IonItemSliding key={request.id}>
+						<IonItem>
+							<IonAvatar slot="start">
+								<img src={request.from.photo} alt="" />
+							</IonAvatar>
+							<IonIcon icon={heart}></IonIcon>
+							<IonAvatar>
+								<img src={request.to.photo} alt="" />
+							</IonAvatar>
+							<IonChip color="warning">{request.status}</IonChip>
+						</IonItem>
+						<IonItemOptions side="end">
+							<IonItemOption color={'danger'}>
+								<IonIcon slot="icon-only" icon={trash} onClick={() => deleteRequest(request.id)}></IonIcon>
+							</IonItemOption>
+						</IonItemOptions>
+					</IonItemSliding>
 				)
 			})}
 		</IonList>

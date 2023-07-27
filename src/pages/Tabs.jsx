@@ -22,7 +22,7 @@ const Tabs = () => {
 					<Route path="/me" render={() => <MyProfile />} exact={true} />
 					<Route path="/users/:id" render={() => <UserProfile />} />
 				</IonRouterOutlet>
-				<IonTabBar slot="bottom">
+				<IonTabBar color={'danger'} slot="bottom">
 					<IonTabButton tab="home" href="/home">
 						<IonIcon icon={homeOutline}></IonIcon>
 					</IonTabButton>

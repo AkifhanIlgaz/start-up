@@ -3,7 +3,6 @@ import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
 import firebaseConfig from '../config'
-import { query, where, getDocs } from 'firebase/firestore'
 
 firebase.initializeApp(firebaseConfig)
 

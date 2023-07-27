@@ -10,9 +10,15 @@ firebase.initializeApp(firebaseConfig)
 export const MatchRequestCollection = 'matchRequests'
 
 export class MatchRequest {
-	constructor(from, to, status, id) {
-		this.from = from
-		this.to = to
+	constructor(from, fromPhoto, to, toPhoto, status, id) {
+		this.from = {
+			ownerId: from,
+			photo: fromPhoto
+		}
+		this.to = {
+			ownerId: to,
+			photo: toPhoto
+		}
 		this.status = status
 		this.id = id
 	}
@@ -247,10 +253,24 @@ class Request {
 		}
 	}
 
-	async getMatchRequests(userId, status) {
+	async getSentMatchRequests(userId, status) {
 		try {
 			const requestsRef = this.firestore.collection('matchRequests')
-			const snapshot = await requestsRef.where('from', '==', userId).get()
+			const snapshot = await requestsRef.where('from.ownerId', '==', userId).where('status', '==', status).get()
+			return snapshot.docs.map(request => {
+				return {
+					id: request.id,
+					...request.data()
+				}
+			})
+		} catch (error) {
+			throw error
+		}
+	}
+	async getReceivedMatchRequests(userId, status) {
+		try {
+			const requestsRef = this.firestore.collection('matchRequests')
+			const snapshot = await requestsRef.where('to.ownerId', '==', userId).where('status', '==', status).get()
 			return snapshot.docs.map(request => {
 				return {
 					id: request.id,

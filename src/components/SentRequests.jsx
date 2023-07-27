@@ -8,15 +8,7 @@ import { heart, trash, warning } from 'ionicons/icons'
 const SentRequests = () => {
 	const [user] = useRecoilState(userState)
 	const [requests, setRequests] = useState([])
-	const [photo, setPhoto] = useState('')
 	const req = new Request()
-
-	// ! Use owner photo for now
-
-	const getPhoto = async ownerId => {
-		const user = await req.getDocument('users', ownerId)
-		setPhoto(user.photoURL)
-	}
 
 	const deleteRequest = async requestId => {
 		try {
@@ -28,30 +20,28 @@ const SentRequests = () => {
 	}
 
 	const fetchData = async () => {
-		const matchRequests = await req.getMatchRequests(user.uid, 'pending')
+		const matchRequests = await req.getSentMatchRequests(user.uid, 'pending')
+		console
 		setRequests(matchRequests)
 	}
 
 	useEffect(() => {
 		fetchData()
-	}, [])
+	}, [requests])
 
 	return (
 		<IonList>
-			{requests.map(async request => {
-				// TODO Change name
-				const otherOwner = await req.getDocument('users', request.to)
-
+			{requests.map(request => {
 				return (
 					<div key={request.id}>
 						<IonItemSliding>
 							<IonItem>
 								<IonAvatar slot="start">
-									<img src={user.photoURL} alt="" />
+									<img src={request.from.photo} alt="" />
 								</IonAvatar>
 								<IonIcon icon={heart}></IonIcon>
 								<IonAvatar>
-									<img src={otherOwner.photoURL} alt="" />
+									<img src={request.to.photo} alt="" />
 								</IonAvatar>
 								<IonChip color="warning">{request.status}</IonChip>
 								<IonChip>{request.id}</IonChip>

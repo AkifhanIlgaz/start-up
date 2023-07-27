@@ -19,7 +19,7 @@ const PetCard = ({ pet }) => {
 	const sendMatchRequest = async () => {
 		try {
 			const req = new Request()
-			const matchRequest = new MatchRequest(user.uid, pet.ownerId, 'pending', '')
+			const matchRequest = new MatchRequest(user.uid, user.photoURL, pet.ownerId, pet.photoURL, 'pending', '')
 			const res = await req.addDocument('matchRequests', { ...matchRequest })
 			matchRequest.id = res.id
 			await req.setDocument('matchRequests', res.id, { ...matchRequest })

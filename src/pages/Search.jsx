@@ -37,6 +37,7 @@ export const Search = () => {
 					zoom: 12
 				}
 			})
+
 			const markers = [
 				{
 					coordinate: {
@@ -44,18 +45,27 @@ export const Search = () => {
 						lng: coordinates.coords.longitude
 					},
 					title: 'Me'
-				}
+				},
+				...pets.map(pet => {
+					return {
+						coordinate: {
+							lat: pet.lat,
+							lng: pet.long
+						},
+						title: pet.name
+					}
+				})
 			]
 
-			pets.forEach(pet => {
-				markers.push({
-					coordinate: {
-						lat: pet.lat,
-						lng: pet.long
-					},
-					title: pet.name
-				})
-			})
+			// pets.forEach(pet => {
+			// 	markers.push({
+			// 		coordinate: {
+			// 			lat: pet.lat,
+			// 			lng: pet.long
+			// 		},
+			// 		title: pet.name
+			// 	})
+			// })
 
 			// TODO => Pop up info window on click marker
 			newMap.addMarkers(markers)

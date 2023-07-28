@@ -1,3 +1,4 @@
+import { Geolocation } from '@capacitor/geolocation'
 import { IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
 import { cloudUploadOutline } from 'ionicons/icons'
 import React, { useRef, useState } from 'react'
@@ -5,38 +6,41 @@ import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 import { useRecoilState } from 'recoil'
 import catTypes from '../api/catTypes'
-import Request, { PetsCollection } from '../api/request'
+import Request, { Pet, PetsCollection } from '../api/request'
 import userState from '../atoms/user'
 
 const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
-	const [user, setUser] = useRecoilState(userState)
+	const req = new Request()
 
+	const [user, setUser] = useRecoilState(userState)
 	const [downloadURL, setDownloadURL] = useState(null)
 	const [loading, setLoading] = useState(false)
 	const upload = useRef()
 
 	const intl = useIntl()
-
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
-
 	const {
 		register,
 		handleSubmit,
 		formState: { errors }
 	} = useForm()
 
-	const onSubmit = async data => {
-		data = { ...data, ownerId: user.uid, photoURL: downloadURL }
-		// TODO Add location to pet
-		const req = new Request()
-		await req.addDocument(PetsCollection, data)
+	const addPet = async newPet => {
+		const pet = new Pet(newPet.name, user.uid, user.username, newPet.age, newPet.breed, newPet.gender, newPet.info)
+		pet.photoURL = downloadURL
+		const location = await Geolocation.getCurrentPosition()
+		pet.lat = location.coords.latitude
+		pet.long = location.coords.longitude
+		const res = await req.addDocument(PetsCollection, { ...pet })
+		pet.id = res.id
+		console.log(pet)
+		await req.setDocument(PetsCollection, res.id, { ...pet })
 	}
 
 	const handleFileUpload = async e => {
 		const file = e.target.files[0]
 		try {
 			setLoading(true)
-			const req = new Request()
 			const downloadURL = await req.uploadFile(`${user.uid}/pets`, file)
 			setDownloadURL(downloadURL)
 			setLoading(false)
@@ -62,7 +66,7 @@ const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 			<IonGrid className="ion-no-margin">
 				<IonRow>
 					<IonCol>
-						<form onSubmit={handleSubmit(onSubmit)}>
+						<form onSubmit={handleSubmit(addPet)}>
 							<IonList lines="full">
 								<IonItem>
 									{!downloadURL && !loading && (
@@ -90,10 +94,6 @@ const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 													<IonIcon icon={cloudUploadOutline} slot="end"></IonIcon>
 												</IonButton>
 												<input style={{ display: 'none' }} type="file" onChange={handleFileUpload} ref={upload} />
-												{/* <IonAvatar className="ion-margin-end">
-												<img src={downloadURL} alt="" style={{ width: '50px' }} />
-											</IonAvatar>
-											<IonLabel color="success">Yüklendi!</IonLabel> */}
 											</div>
 										</div>
 									)}
@@ -109,7 +109,7 @@ const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 									>
 										{formatMessage('Type')}
 									</IonLabel>
-									<IonSelect {...register('type', { required: true })} interface="action-sheet">
+									<IonSelect {...register('breed', { required: true })} interface="action-sheet">
 										{catTypes.map(type => {
 											return (
 												<IonSelectOption key={type} value={type}>

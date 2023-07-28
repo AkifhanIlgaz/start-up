@@ -1,7 +1,7 @@
 import { Geolocation } from '@capacitor/geolocation'
 import { GoogleMap } from '@capacitor/google-maps'
 import { useEffect, useRef, useState } from 'react'
-import Request from '../api/request'
+import Request, { PetsCollection } from '../api/request'
 import firebaseConfig from '../config'
 import Authorized from '../layouts/Authorized'
 
@@ -16,7 +16,7 @@ export const Search = () => {
 	useEffect(() => {
 		const loadMap = async () => {
 			const req = new Request()
-			const pets = await req.getDocuments('pets')
+			const pets = await req.getDocuments(PetsCollection)
 			const coordinates = await Geolocation.getCurrentPosition()
 			setCoordinate(coordinates.coords)
 

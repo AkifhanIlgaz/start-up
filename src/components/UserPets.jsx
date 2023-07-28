@@ -1,16 +1,28 @@
-import { IonAvatar, IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAvatar, IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { heart, information } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
-import Request from '../api/request'
+import Request, { MatchRequest, MatchRequestCollection } from '../api/request'
 import PetCard from './PetCard'
 
 const UserPets = ({ user }) => {
 	const [pets, setPets] = useState([])
-	const [isOpen, setIsOpen] = useState(false)
+	const [isInfoOpen, setIsInfoOpen] = useState(false)
+	const req = new Request()
+
+	const sendMatchRequest = async pet => {
+		try {
+			const matchRequest = new MatchRequest(user.uid, user.photoURL, pet.ownerId, pet.photoURL, 'pending', '')
+			const res = await req.addDocument(MatchRequestCollection, { ...matchRequest })
+			matchRequest.id = res.id
+			await req.setDocument(MatchRequestCollection, res.id, { ...matchRequest })
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const req = new Request()
 				const res = await req.getPets(user.id)
 				setPets(res)
 			} catch (error) {
@@ -33,14 +45,16 @@ const UserPets = ({ user }) => {
 							<span style={{ marginLeft: '1rem' }}>{pet.name}</span>
 						</IonItem>
 						<IonItemOptions>
-							<IonItemOption color={'primary'}>
-								<IonButton onClick={() => setIsOpen(true)}>Info</IonButton>
-								<IonModal isOpen={isOpen}>
+							<IonItemOption color={'success'}>
+								<IonButton onClick={() => setIsInfoOpen(true)}>
+									<IonIcon icon={information}></IonIcon>
+								</IonButton>
+								<IonModal isOpen={isInfoOpen}>
 									<IonHeader>
 										<IonToolbar>
 											<IonButtons slot="end">
 												<IonTitle>{pet.name}</IonTitle>
-												<IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+												<IonButton onClick={() => setIsInfoOpen(false)}>Close</IonButton>
 											</IonButtons>
 										</IonToolbar>
 									</IonHeader>
@@ -52,6 +66,11 @@ const UserPets = ({ user }) => {
 										</IonRow>
 									</IonGrid>
 								</IonModal>
+							</IonItemOption>
+							<IonItemOption color={'danger'}>
+								<IonButton onClick={() => sendMatchRequest(pet)}>
+									<IonIcon icon={heart}></IonIcon>
+								</IonButton>
 							</IonItemOption>
 						</IonItemOptions>
 					</IonItemSliding>

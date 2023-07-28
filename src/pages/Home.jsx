@@ -28,6 +28,7 @@ function distance(lat1, lon1, lat2, lon2) {
 export const Home = () => {
 	const [pets, setPets] = useState([])
 	const [user] = useRecoilState(userState)
+	const [isPetCardOpen, setIsPetCardOpen] = useState(false)
 
 	useEffect(() => {
 		const fetchData = async () => {

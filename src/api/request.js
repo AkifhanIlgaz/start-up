@@ -10,6 +10,22 @@ export const MatchRequestCollection = 'matchRequests'
 export const PetsCollection = 'pets'
 export const UsersCollection = 'users'
 
+export class Pet {
+	constructor(name, ownerId, ownerName, age, breed, gender, info) {
+		this.name = name
+		this.ownerId = ownerId
+		this.ownerName = ownerName
+		this.age = age
+		this.breed = breed
+		this.gender = gender
+		this.info = info
+		this.lat = 0
+		this.long = 0
+		this.id = ''
+		this.photoURL = ''
+	}
+}
+
 export class MatchRequest {
 	constructor(from, fromPhoto, to, toPhoto, status, id) {
 		this.from = {

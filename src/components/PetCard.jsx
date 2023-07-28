@@ -3,7 +3,7 @@ import { heartOutline } from 'ionicons/icons'
 import React from 'react'
 import { useHistory } from 'react-router'
 import { useRecoilState } from 'recoil'
-import Request, { MatchRequest, MatchRequestCollection } from '../api/request'
+import Request, { MatchRequest } from '../api/request'
 import userState from '../atoms/user'
 
 const PetCard = ({ pet }) => {
@@ -14,13 +14,15 @@ const PetCard = ({ pet }) => {
 		history.push(`/users/${userId}`)
 	}
 
+	// TODO : Open a modal when user wants to send match request to select which pet will be used for request
+	// For now, assume that every user only has one pet
 	const sendMatchRequest = async () => {
 		try {
 			const req = new Request()
 			const matchRequest = new MatchRequest(user.uid, user.photoURL, pet.ownerId, pet.photoURL, 'pending', '')
-			const res = await req.addDocument(MatchRequestCollection, { ...matchRequest })
+			const res = await req.addDocument('matchRequests', { ...matchRequest })
 			matchRequest.id = res.id
-			await req.setDocument(MatchRequestCollection, res.id, { ...matchRequest })
+			await req.setDocument('matchRequests', res.id, { ...matchRequest })
 		} catch (error) {
 			console.log(error)
 		}

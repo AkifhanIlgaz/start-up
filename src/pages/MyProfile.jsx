@@ -79,22 +79,25 @@ export const MyProfile = () => {
 	return (
 		<Authorized>
 			<div className="ion-padding-top">
-				<div className="ion-text-center">
-					<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ borderRadius: '50%', width: '50%' }} />
-				</div>
-				<div className="ion-text-center ion-padding-top">
+				<div className="ion-text-center ion-margin-bottom">
 					<span>{user.username}</span>
 				</div>
-				<IonToolbar color={'transparent'}>
-					<IonSegment value={lastSegment} onIonChange={e => setLastSegment(e.detail.value)}>
-						<IonSegmentButton value="pets">
-							<IonLabel>Pets</IonLabel>
-						</IonSegmentButton>
-						<IonSegmentButton value="favorites">
-							<IonLabel>History</IonLabel>
-						</IonSegmentButton>
-					</IonSegment>
-				</IonToolbar>
+				<div className="ion-text-center ion-margin-bottom">
+					<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ borderRadius: '50%', width: '50%' }} />
+				</div>
+
+				<div className="ion-margin-bottom">
+					<IonToolbar color={'transparent'} className="ion-no-margin">
+						<IonSegment value={lastSegment} onIonChange={e => setLastSegment(e.detail.value)}>
+							<IonSegmentButton value="pets">
+								<IonLabel>Pets</IonLabel>
+							</IonSegmentButton>
+							<IonSegmentButton value="favorites">
+								<IonLabel>History</IonLabel>
+							</IonSegmentButton>
+						</IonSegment>
+					</IonToolbar>
+				</div>
 				{lastSegment == 'pets' ? <MyPets user={user} /> : <div>History</div>}
 				<EditProfile isEditProfileOpen={isEditProfileOpen} setIsEditProfileOpen={setIsEditProfileOpen}></EditProfile>
 				<AddPet isAddPetOpen={isAddPetOpen} setIsAddPetOpen={setIsAddPetOpen} />

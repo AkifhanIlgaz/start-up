@@ -1,58 +1,41 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonTitle, IonToolbar, useIonAlert } from '@ionic/react'
-import { useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useIntl } from 'react-intl'
-import { useRecoilState } from 'recoil'
-import Request, { MatchRequestCollection } from '../api/request'
-import { userState } from '../atoms/user'
-import Authorized from '../layouts/Authorized'
-import AddPet from '../components/AddPet'
+import { IonCard, IonCardContent, IonCol, IonFab, IonFabButton, IonFabList, IonIcon, IonLabel, IonRow, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
 import { addOutline, logOutOutline, pencilOutline, settingsOutline, trashOutline } from 'ionicons/icons'
-import Tabs from './Tabs'
-import PetCard from '../components/PetCard'
-import MyPets from '../components/MyPets'
-import { set } from 'lodash'
+import { useRef, useState } from 'react'
 import { useHistory } from 'react-router'
-import firebase from 'firebase/compat/app'
-import EditProfile from './EditProfile'
+import { useRecoilState } from 'recoil'
+import Request, { MatchRequestCollection, PetsCollection, UsersCollection } from '../api/request'
+import { userState } from '../atoms/user'
+import AddPet from '../components/AddPet'
+import EditProfile from '../components/EditProfile'
+import MyPets from '../components/MyPets'
+import Authorized from '../layouts/Authorized'
 
 const defaultImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtMHFQmELtQP7GiQrvpYQQVYIU_2ZoF-n-I3CqhOs9qaetDVhykH1PSmMSlfD5nCklxY&usqp=CAU'
 
 export const MyProfile = () => {
 	const history = useHistory()
-	const intl = useIntl()
 	const req = new Request()
-	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
 
 	const [user, setUser] = useRecoilState(userState)
 	const [downloadURL, setDownloadURL] = useState(null)
 	const [lastSegment, setLastSegment] = useState('pets')
 	const [isAddPetOpen, setIsAddPetOpen] = useState(false)
 	const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
-
 	const [loading, setLoading] = useState(false)
 
 	const upload = useRef()
-
-	const {
-		register,
-		handleSubmit,
-		formState: { errors }
-	} = useForm()
 
 	const handleFileUpload = async e => {
 		const file = e.target.files[0]
 		try {
 			setLoading(true)
-
 			const downloadURL = await req.uploadFile(user.uid, file)
-			const res = await req.setDocument('users', user.uid, { ...user, photoURL: downloadURL })
+			await req.setDocument(UsersCollection, user.uid, { ...user, photoURL: downloadURL })
 			setDownloadURL(downloadURL)
 			setUser({
 				...user,
 				photoURL: downloadURL
 			})
-			console.log(res)
 			setLoading(false)
 		} catch (error) {
 			console.error(error)
@@ -70,14 +53,18 @@ export const MyProfile = () => {
 	}
 
 	const deleteAccount = async () => {
-		await req.deleteDocument('users', user.uid)
-		const pets = await req.firestore.collection('pets').where('ownerId', '==', user.uid).get()
-		pets.forEach(async pet => {
-			await req.deleteDocument('pets', pet.id)
-		})
+		await req.deleteDocument(UsersCollection, user.uid)
 
-		const matchRequests = await req.getDocuments(MatchRequestCollection)
-		matchRequests
+		await req.firestore
+			.collection(PetsCollection)
+			.where('ownerId', '==', user.uid)
+			.get()
+			.docs.forEach(async pet => {
+				await req.deleteDocument(PetsCollection, pet.id)
+			})
+
+		await req
+			.getDocuments(MatchRequestCollection)
 			.filter(matchRequest => {
 				return matchRequest.from.ownerId == user.uid || matchRequest.to.ownerId == user.uid
 			})

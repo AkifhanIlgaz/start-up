@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
 import { useRecoilState } from 'recoil'
 import userState from '../atoms/user'
 

@@ -1,12 +1,10 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon } from '@ionic/react'
-import Authorized from '../layouts/Authorized'
-import { heartOutline } from 'ionicons/icons'
-import PetCard from '../components/PetCard'
-import Request from '../api/request'
-import { useEffect, useState } from 'react'
 import { Geolocation } from '@capacitor/geolocation'
+import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
+import Request, { PetsCollection } from '../api/request'
 import userState from '../atoms/user'
+import PetCard from '../components/PetCard'
+import Authorized from '../layouts/Authorized'
 
 function distance(lat1, lon1, lat2, lon2) {
 	if (lat1 == lat2 && lon1 == lon2) {
@@ -34,7 +32,7 @@ export const Home = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const req = new Request()
-			const petsRes = (await req.getDocuments('pets')).filter(pet => pet.ownerId != user.uid)
+			const petsRes = (await req.getDocuments(PetsCollection)).filter(pet => pet.ownerId != user.uid)
 			const coordinates = await Geolocation.getCurrentPosition()
 
 			petsRes.sort((a, b) => distance(coordinates.coords.latitude, coordinates.coords.longitude, a.lat, a.long) - distance(coordinates.coords.latitude, coordinates.coords.longitude, b.lat, b.long))

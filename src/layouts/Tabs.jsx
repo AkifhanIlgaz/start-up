@@ -2,13 +2,13 @@ import { IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ion
 import { earth, homeOutline, notificationsOutline, personOutline } from 'ionicons/icons'
 import React from 'react'
 import { Route } from 'react-router-dom'
-import Home from './Home'
-import Search from './Search'
 import { useRecoilState } from 'recoil'
 import { userState } from '../atoms/user'
-import UserProfile from './UserProfile'
-import MyProfile from './MyProfile'
-import Notifications from './Notifications'
+import Home from '../pages/Home'
+import MyProfile from '../pages/MyProfile'
+import Notifications from '../pages/Notifications'
+import Search from '../pages/Search'
+import UserProfile from '../pages/UserProfile'
 
 const Tabs = () => {
 	const [user, setUser] = useRecoilState(userState)
@@ -29,7 +29,6 @@ const Tabs = () => {
 					<IonTabButton tab="search" href="/search">
 						<IonIcon icon={earth}></IonIcon>
 					</IonTabButton>
-					{/* Notifications && Messages */}
 					<IonTabButton tab="notifications" href="/notifications">
 						<IonIcon icon={notificationsOutline}></IonIcon>
 					</IonTabButton>

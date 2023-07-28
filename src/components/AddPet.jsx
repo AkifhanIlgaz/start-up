@@ -1,17 +1,15 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
+import { IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react'
+import { cloudUploadOutline } from 'ionicons/icons'
 import React, { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 import { useRecoilState } from 'recoil'
-import userState from '../atoms/user'
-import Request from '../api/request'
-import { useHistory } from 'react-router'
 import catTypes from '../api/catTypes'
-import { cloudUploadOutline } from 'ionicons/icons'
+import Request, { PetsCollection } from '../api/request'
+import userState from '../atoms/user'
 
 const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 	const [user, setUser] = useRecoilState(userState)
-	const history = useHistory()
 
 	const [downloadURL, setDownloadURL] = useState(null)
 	const [loading, setLoading] = useState(false)
@@ -31,7 +29,7 @@ const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 		data = { ...data, ownerId: user.uid, photoURL: downloadURL }
 		// TODO Add location to pet
 		const req = new Request()
-		await req.addDocument('pets', data)
+		await req.addDocument(PetsCollection, data)
 	}
 
 	const handleFileUpload = async e => {

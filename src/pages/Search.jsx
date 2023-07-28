@@ -1,16 +1,11 @@
 import { Geolocation } from '@capacitor/geolocation'
 import { GoogleMap } from '@capacitor/google-maps'
 import { useEffect, useRef, useState } from 'react'
-import { useRecoilState } from 'recoil'
-import { userState } from '../atoms/user'
+import Request from '../api/request'
 import firebaseConfig from '../config'
 import Authorized from '../layouts/Authorized'
-import Request from '../api/request'
-import { info } from 'sass'
 
 export const Search = () => {
-	const [user, setUser] = useRecoilState(userState)
-
 	const [coordinate, setCoordinate] = useState({
 		latitude: 38.9637,
 		longitude: 35.2433
@@ -56,16 +51,6 @@ export const Search = () => {
 					}
 				})
 			]
-
-			// pets.forEach(pet => {
-			// 	markers.push({
-			// 		coordinate: {
-			// 			lat: pet.lat,
-			// 			lng: pet.long
-			// 		},
-			// 		title: pet.name
-			// 	})
-			// })
 
 			// TODO => Pop up info window on click marker
 			newMap.addMarkers(markers)

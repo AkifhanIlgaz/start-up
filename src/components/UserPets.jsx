@@ -1,8 +1,6 @@
 import { IonAvatar, IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
 import React, { useEffect, useState } from 'react'
 import Request from '../api/request'
-import { useRecoilState } from 'recoil'
-import userState from '../atoms/user'
 import PetCard from './PetCard'
 
 const UserPets = ({ user }) => {

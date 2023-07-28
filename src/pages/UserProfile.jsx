@@ -1,34 +1,21 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonModal, IonPage, IonRow, IonSegment, IonSegmentButton, IonTitle, IonToolbar, useIonAlert } from '@ionic/react'
-import { useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useIntl } from 'react-intl'
-import { useRecoilState } from 'recoil'
-import Request from '../api/request'
-import { userState } from '../atoms/user'
-import Authorized from '../layouts/Authorized'
-import AddPet from '../components/AddPet'
-import { addOutline } from 'ionicons/icons'
-import Tabs from './Tabs'
-import PetCard from '../components/PetCard'
-import MyPets from '../components/MyPets'
-import { set } from 'lodash'
-import UserPets from '../components/UserPets'
+import { IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import Request, { UsersCollection } from '../api/request'
+import UserPets from '../components/UserPets'
+import Authorized from '../layouts/Authorized'
 
 const defaultImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtMHFQmELtQP7GiQrvpYQQVYIU_2ZoF-n-I3CqhOs9qaetDVhykH1PSmMSlfD5nCklxY&usqp=CAU'
 
 export const UserProfile = () => {
-	const intl = useIntl()
 	let { id } = useParams()
-
-	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
 
 	const [user, setUser] = useState({})
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const req = new Request()
-			const res = await req.getDocument('users', id)
+			const res = await req.getDocument(UsersCollection, id)
 			setUser(res)
 		}
 

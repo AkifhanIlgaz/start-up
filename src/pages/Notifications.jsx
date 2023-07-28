@@ -1,7 +1,7 @@
-import { IonContent, IonHeader, IonLabel, IonGrid, IonPage, IonSegment, IonSegmentButton, IonRow, IonToolbar, IonCol, IonCard, IonCardContent } from '@ionic/react'
+import { IonCol, IonContent, IonGrid, IonLabel, IonRow, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
 import React, { useState } from 'react'
-import SentRequests from '../components/SentRequests'
 import ReceivedRequests from '../components/ReceivedRequests'
+import SentRequests from '../components/SentRequests'
 import Authorized from '../layouts/Authorized'
 
 const Notifications = () => {

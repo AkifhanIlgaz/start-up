@@ -1,10 +1,10 @@
 import { IonAvatar, IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
 import React, { useEffect, useState } from 'react'
-import Request from '../api/request'
 import { useRecoilState } from 'recoil'
+import Request, { PetsCollection } from '../api/request'
 import userState from '../atoms/user'
-import PetCard from './PetCard'
 import EditPet from './EditPet'
+import PetCard from './PetCard'
 
 const MyPets = () => {
 	const [user, setUser] = useRecoilState(userState)
@@ -14,7 +14,7 @@ const MyPets = () => {
 
 	const deletePet = async id => {
 		const req = new Request()
-		await req.deleteDocument('pets', id)
+		await req.deleteDocument(PetsCollection, id)
 	}
 
 	useEffect(() => {

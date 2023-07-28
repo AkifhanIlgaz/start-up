@@ -7,6 +7,8 @@ import firebaseConfig from '../config'
 firebase.initializeApp(firebaseConfig)
 
 export const MatchRequestCollection = 'matchRequests'
+export const PetsCollection = 'pets'
+export const UsersCollection = UsersCollection
 
 export class MatchRequest {
 	constructor(from, fromPhoto, to, toPhoto, status, id) {
@@ -46,14 +48,14 @@ class Request {
 			const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode)
 			const userCredential = await this.auth.signInWithCredential(credential)
 			const user = userCredential.user
-			const userDocRef = this.firestore.collection('users').doc(user.uid)
+			const userDocRef = this.firestore.collection(UsersCollection).doc(user.uid)
 			const userDocSnapshot = await userDocRef.get()
 			userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId, ...userData }
 			if (userDocSnapshot.exists) {
-				await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
+				await this.setDocument(UsersCollection, user.uid, { ...userDocSnapshot.data(), ...userData })
 				return { ...userDocSnapshot.data(), ...userData }
 			} else {
-				await this.setDocument('users', user.uid, userData)
+				await this.setDocument(UsersCollection, user.uid, userData)
 				return userData
 			}
 		} catch (error) {
@@ -66,14 +68,14 @@ class Request {
 			const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode)
 			const userCredential = await this.auth.signInWithCredential(credential)
 			const user = userCredential.user
-			const userDocRef = this.firestore.collection('users').doc(user.uid)
+			const userDocRef = this.firestore.collection(UsersCollection).doc(user.uid)
 			const userDocSnapshot = await userDocRef.get()
 			const userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId }
 			if (userDocSnapshot.exists) {
-				await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
+				await this.setDocument(UsersCollection, user.uid, { ...userDocSnapshot.data(), ...userData })
 				return { ...userDocSnapshot.data(), ...userData }
 			} else {
-				await this.setDocument('users', user.uid, userData)
+				await this.setDocument(UsersCollection, user.uid, userData)
 				return userData
 			}
 		} catch (error) {
@@ -98,14 +100,14 @@ class Request {
 			} else {
 				const userCredential = await this.auth.createUserWithEmailAndPassword(email, password)
 				const user = userCredential.user
-				const userDocRef = this.firestore.collection('users').doc(user.uid)
+				const userDocRef = this.firestore.collection(UsersCollection).doc(user.uid)
 				const userDocSnapshot = await userDocRef.get()
 				userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, photoURL: user.photoURL, providerId: user.providerId, ...userData }
 				if (userDocSnapshot.exists) {
-					await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
+					await this.setDocument(UsersCollection, user.uid, { ...userDocSnapshot.data(), ...userData })
 					return { ...userDocSnapshot.data(), ...userData }
 				} else {
-					await this.setDocument('users', user.uid, userData)
+					await this.setDocument(UsersCollection, user.uid, userData)
 					return userData
 				}
 			}
@@ -120,15 +122,15 @@ class Request {
 			if (userExists) {
 				const userCredential = await this.auth.signInWithEmailAndPassword(email, password)
 				const user = userCredential.user
-				const userDocRef = this.firestore.collection('users').doc(user.uid)
+				const userDocRef = this.firestore.collection(UsersCollection).doc(user.uid)
 
 				const userDocSnapshot = await userDocRef.get()
 				const userData = { uid: user.uid, createdAt: user.metadata.createdAt, creationTime: user.metadata.creationTime, lastLoginAt: user.metadata.lastLoginAt, lastSignInTime: user.metadata.lastSignInTime, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }
 				if (userDocSnapshot.exists) {
-					await this.setDocument('users', user.uid, { ...userDocSnapshot.data(), ...userData })
+					await this.setDocument(UsersCollection, user.uid, { ...userDocSnapshot.data(), ...userData })
 					return { ...userDocSnapshot.data(), ...userData }
 				} else {
-					await this.setDocument('users', user.uid, userData)
+					await this.setDocument(UsersCollection, user.uid, userData)
 					return userData
 				}
 			} else {
@@ -239,7 +241,7 @@ class Request {
 
 	async getPets(userId) {
 		try {
-			const petsRef = this.firestore.collection('pets')
+			const petsRef = this.firestore.collection(PetsCollection)
 			const snapshot = await petsRef.where('ownerId', '==', userId).get()
 			return snapshot.docs.map(pet => {
 				return {
@@ -254,7 +256,7 @@ class Request {
 
 	async getSentMatchRequests(userId, status) {
 		try {
-			const requestsRef = this.firestore.collection('matchRequests')
+			const requestsRef = this.firestore.collection(MatchRequestCollection)
 			const snapshot = await requestsRef.where('from.ownerId', '==', userId).where('status', '==', status).get()
 			return snapshot.docs.map(request => {
 				return {
@@ -268,7 +270,7 @@ class Request {
 	}
 	async getReceivedMatchRequests(userId, status) {
 		try {
-			const requestsRef = this.firestore.collection('matchRequests')
+			const requestsRef = this.firestore.collection(MatchRequestCollection)
 			const snapshot = await requestsRef.where('to.ownerId', '==', userId).where('status', '==', status).get()
 			return snapshot.docs.map(request => {
 				return {

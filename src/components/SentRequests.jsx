@@ -1,9 +1,9 @@
+import { IonAvatar, IonChip, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList } from '@ionic/react'
+import { heart, trash } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import userState from '../atoms/user'
 import Request, { MatchRequestCollection } from '../api/request'
-import { IonAvatar, IonButton, IonChip, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList } from '@ionic/react'
-import { heart, trash, warning } from 'ionicons/icons'
+import userState from '../atoms/user'
 
 const SentRequests = () => {
 	const [user] = useRecoilState(userState)
@@ -19,12 +19,11 @@ const SentRequests = () => {
 		}
 	}
 
-	const fetchData = async () => {
-		const matchRequests = await req.getSentMatchRequests(user.uid, 'pending')
-		setRequests(matchRequests)
-	}
-
 	useEffect(() => {
+		const fetchData = async () => {
+			const matchRequests = await req.getSentMatchRequests(user.uid, 'pending')
+			setRequests(matchRequests)
+		}
 		fetchData()
 	}, [requests])
 

@@ -10,19 +10,14 @@ import NotAuthorized from '../layouts/NotAuthorized'
 
 export const SignUp = () => {
 	const history = useHistory()
-
 	const intl = useIntl()
-
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
-
-	const [user, setUser] = useRecoilState(userState)
-
+	const [setUser] = useRecoilState(userState)
 	const {
 		register,
 		handleSubmit,
 		formState: { errors }
 	} = useForm()
-
 	const [presentAlert] = useIonAlert()
 
 	const alert = (title, message) => {

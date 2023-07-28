@@ -298,6 +298,11 @@ class Request {
 			throw error
 		}
 	}
+
+	async filter(collection, field, excepted) {
+		const pets = this.firestore.collection(collection)
+		return (await pets.where(field, '==', excepted).get()).docs.map(pet => pet.data())
+	}
 }
 
 export default Request

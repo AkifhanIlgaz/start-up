@@ -42,6 +42,9 @@ export const Home = () => {
 				Pet: ${pet.name} `)
 			})
 			setPets(petsRes)
+
+			const filteredPets = await req.filter(PetsCollection, 'gender', 'Male')
+			console.log(filteredPets)
 		}
 
 		fetchData()

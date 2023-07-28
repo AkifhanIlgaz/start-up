@@ -12,7 +12,7 @@ export const SignUp = () => {
 	const history = useHistory()
 	const intl = useIntl()
 	const formatMessage = (id, values) => intl.formatMessage({ id: id }, { ...values })
-	const [setUser] = useRecoilState(userState)
+	const [user, setUser] = useRecoilState(userState)
 	const {
 		register,
 		handleSubmit,

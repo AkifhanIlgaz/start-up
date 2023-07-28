@@ -82,8 +82,27 @@ export const MyProfile = () => {
 				<div className="ion-text-center ion-margin-bottom">
 					<span>{user.username}</span>
 				</div>
-				<div className="ion-text-center ion-margin-bottom">
-					<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ borderRadius: '50%', width: '50%' }} />
+				<div
+					className=" ion-text-center ion-margin-bottom"
+					style={{
+						position: 'relative'
+					}}
+				>
+					<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ position: 'relative', borderRadius: '50%', width: '50%', height: '50%' }} />
+					<IonFab slot="fixed" horizontal="right" vertical="bottom">
+						<IonFabButton
+							color={'danger'}
+							style={{
+								zIndex: '2',
+								position: 'absolute',
+								right: '22%',
+								bottom: '1%',
+								margin: 'auto'
+							}}
+						>
+							<IonIcon icon={pencilOutline}></IonIcon>
+						</IonFabButton>
+					</IonFab>
 				</div>
 
 				<div className="ion-margin-bottom">

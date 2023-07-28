@@ -11,7 +11,7 @@ export const PetsCollection = 'pets'
 export const UsersCollection = 'users'
 
 export class Pet {
-	constructor(name, ownerId, ownerName, age, breed, gender, info) {
+	constructor(name, ownerId, ownerName, age, breed, gender, info, vaccines) {
 		this.name = name
 		this.ownerId = ownerId
 		this.ownerName = ownerName
@@ -19,6 +19,7 @@ export class Pet {
 		this.breed = breed
 		this.gender = gender
 		this.info = info
+		this.vaccines = vaccines
 		this.lat = 0
 		this.long = 0
 		this.id = ''

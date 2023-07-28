@@ -26,15 +26,14 @@ const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 	} = useForm()
 
 	const addPet = async newPet => {
-		const pet = new Pet(newPet.name, user.uid, user.username, newPet.age, newPet.breed, newPet.gender, newPet.info)
-		console.log(pet)
+		const pet = new Pet(newPet.name, user.uid, user.username, newPet.age, newPet.breed, newPet.gender, newPet.info, newPet.vaccines)
+
 		pet.photoURL = downloadURL
 		const location = await Geolocation.getCurrentPosition()
 		pet.lat = location.coords.latitude
 		pet.long = location.coords.longitude
 		const res = await req.addDocument(PetsCollection, { ...pet })
 		pet.id = res.id
-		console.log(pet)
 		await req.setDocument(PetsCollection, res.id, { ...pet })
 	}
 

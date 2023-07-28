@@ -55,7 +55,7 @@ const PetCard = ({ pet }) => {
 				<div className="ion-padding-top">
 					<IonChip color={'primary'}>Type: {pet.breed}</IonChip>
 					<IonChip color={'tertiary'}> Age: {pet.age}</IonChip>
-					{pet.vaccines ? <IonChip color={'success'}>Vaccines: Tam</IonChip> : <IonChip color={'danger'}>Vaccines: Eksik</IonChip>}
+					{pet.vaccines == 'Tam' ? <IonChip color={'success'}>Vaccines: Tam</IonChip> : <IonChip color={'danger'}>Vaccines: Eksik</IonChip>}
 				</div>
 			</IonCardContent>
 		</IonCard>

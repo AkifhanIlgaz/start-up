@@ -91,6 +91,7 @@ export const MyProfile = () => {
 					<img src={user && user.photoURL ? user.photoURL : defaultImg} alt="" style={{ position: 'relative', borderRadius: '50%', width: '50%', height: '50%' }} />
 					<IonFab slot="fixed" horizontal="right" vertical="bottom">
 						<IonFabButton
+							size="small"
 							color={'danger'}
 							style={{
 								zIndex: '2',
@@ -99,10 +100,13 @@ export const MyProfile = () => {
 								bottom: '1%',
 								margin: 'auto'
 							}}
+							onClick={() => setIsEditProfileOpen(true)}
 						>
 							<IonIcon icon={pencilOutline}></IonIcon>
 						</IonFabButton>
 					</IonFab>
+
+					<EditProfile isEditProfileOpen={isEditProfileOpen} setIsEditProfileOpen={setIsEditProfileOpen}></EditProfile>
 				</div>
 
 				<div className="ion-margin-bottom">
@@ -118,7 +122,6 @@ export const MyProfile = () => {
 					</IonToolbar>
 				</div>
 				{lastSegment == 'pets' ? <MyPets user={user} /> : <div>History</div>}
-				<EditProfile isEditProfileOpen={isEditProfileOpen} setIsEditProfileOpen={setIsEditProfileOpen}></EditProfile>
 				<AddPet isAddPetOpen={isAddPetOpen} setIsAddPetOpen={setIsAddPetOpen} />
 				<IonCard>
 					<IonCardContent>
@@ -160,9 +163,6 @@ export const MyProfile = () => {
 					<IonFabList side="top">
 						<IonFabButton color={'primary'} onClick={signOut}>
 							<IonIcon icon={logOutOutline}></IonIcon>
-						</IonFabButton>
-						<IonFabButton color={'success'} onClick={() => setIsEditProfileOpen(true)}>
-							<IonIcon icon={pencilOutline}></IonIcon>
 						</IonFabButton>
 						<IonFabButton color={'danger'} onClick={deleteAccount}>
 							<IonIcon icon={trashOutline}></IonIcon>

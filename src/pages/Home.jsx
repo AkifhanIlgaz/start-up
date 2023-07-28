@@ -28,7 +28,6 @@ function distance(lat1, lon1, lat2, lon2) {
 export const Home = () => {
 	const [pets, setPets] = useState([])
 	const [user] = useRecoilState(userState)
-	const [isPetCardOpen, setIsPetCardOpen] = useState(false)
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -37,14 +36,7 @@ export const Home = () => {
 			const coordinates = await Geolocation.getCurrentPosition()
 
 			petsRes.sort((a, b) => distance(coordinates.coords.latitude, coordinates.coords.longitude, a.lat, a.long) - distance(coordinates.coords.latitude, coordinates.coords.longitude, b.lat, b.long))
-			petsRes.forEach(pet => {
-				console.log(`Distance: ${distance(coordinates.coords.latitude, coordinates.coords.longitude, pet.lat, pet.long)}
-				Pet: ${pet.name} `)
-			})
 			setPets(petsRes)
-
-			const filteredPets = await req.filter(PetsCollection, 'gender', 'Male')
-			console.log(filteredPets)
 		}
 
 		fetchData()

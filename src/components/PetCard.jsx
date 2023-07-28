@@ -30,7 +30,7 @@ const PetCard = ({ pet }) => {
 
 	return (
 		<IonCard>
-			<img src={pet.photoURL} alt="pet image" style={{ width: '100vh', height: '300px' }} />
+			<img src={pet.photoURL} alt="pet image" style={{ width: '100vh', height: '250px' }} />
 			<IonCardHeader className="ion-padding-bottom">
 				<IonCardTitle
 					style={{

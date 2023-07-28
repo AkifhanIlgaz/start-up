@@ -49,7 +49,6 @@ const EditPet = ({ isEditPetOpen, setIsEditPetOpen, currentPet }) => {
 
 	const editPet = async data => {
 		data = { ...data, ...pet }
-		console.log(data)
 		await req.setDocument(PetsCollection, pet.id, data)
 		setIsEditPetOpen(false)
 	}

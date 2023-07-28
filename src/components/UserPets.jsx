@@ -46,7 +46,7 @@ const UserPets = ({ user }) => {
 						</IonItem>
 						<IonItemOptions>
 							<IonItemOption color={'success'}>
-								<IonButton onClick={() => setIsInfoOpen(true)}>
+								<IonButton onClick={() => setIsInfoOpen(true)} color={'success'}>
 									<IonIcon icon={information}></IonIcon>
 								</IonButton>
 								<IonModal isOpen={isInfoOpen}>
@@ -68,7 +68,7 @@ const UserPets = ({ user }) => {
 								</IonModal>
 							</IonItemOption>
 							<IonItemOption color={'danger'}>
-								<IonButton onClick={() => sendMatchRequest(pet)}>
+								<IonButton onClick={() => sendMatchRequest(pet)} color={'danger'}>
 									<IonIcon icon={heart}></IonIcon>
 								</IonButton>
 							</IonItemOption>

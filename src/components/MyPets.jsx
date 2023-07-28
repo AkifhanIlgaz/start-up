@@ -1,4 +1,5 @@
-import { IonAvatar, IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAvatar, IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { information, pencil, trash } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import Request, { PetsCollection } from '../api/request'
@@ -44,7 +45,9 @@ const MyPets = () => {
 						</IonItem>
 						<IonItemOptions>
 							<IonItemOption color={'primary'}>
-								<IonButton onClick={() => setIsInfoOpen(true)}>Info</IonButton>
+								<IonButton onClick={() => setIsInfoOpen(true)} color={'primary'}>
+									<IonIcon icon={information} size="medium"></IonIcon>
+								</IonButton>
 								<IonModal isOpen={isInfoOpen}>
 									<IonHeader>
 										<IonToolbar>
@@ -63,12 +66,16 @@ const MyPets = () => {
 									</IonGrid>
 								</IonModal>
 							</IonItemOption>
-							<IonItemOption color={'success'}>
-								<EditPet isEditPetOpen={isEditPetOpen} setIsEditPetOpen={setIsEditPetOpen} currentPet={pet} pets={pets} setPets={setPets}/>
-								<IonButton onClick={() => setIsEditPetOpen(true)}>Edit</IonButton>
+							<IonItemOption color={'warning'}>
+								<EditPet isEditPetOpen={isEditPetOpen} setIsEditPetOpen={setIsEditPetOpen} currentPet={pet} pets={pets} setPets={setPets} />
+								<IonButton onClick={() => setIsEditPetOpen(true)} color={'warning'}>
+									<IonIcon icon={pencil}></IonIcon>
+								</IonButton>
 							</IonItemOption>
 							<IonItemOption color={'danger'}>
-								<IonButton onClick={() => deletePet(pet.id)}>Delete</IonButton>
+								<IonButton onClick={() => deletePet(pet.id)} color={'danger'}>
+									<IonIcon icon={trash}></IonIcon>
+								</IonButton>
 							</IonItemOption>
 						</IonItemOptions>
 					</IonItemSliding>

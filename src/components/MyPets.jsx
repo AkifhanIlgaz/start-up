@@ -64,7 +64,7 @@ const MyPets = () => {
 								</IonModal>
 							</IonItemOption>
 							<IonItemOption color={'success'}>
-								<EditPet isEditPetOpen={isEditPetOpen} setIsEditPetOpen={setIsEditPetOpen} currentPet={pet} />
+								<EditPet isEditPetOpen={isEditPetOpen} setIsEditPetOpen={setIsEditPetOpen} currentPet={pet} pets={pets} setPets={setPets}/>
 								<IonButton onClick={() => setIsEditPetOpen(true)}>Edit</IonButton>
 							</IonItemOption>
 							<IonItemOption color={'danger'}>

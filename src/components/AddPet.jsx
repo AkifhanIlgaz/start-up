@@ -27,6 +27,7 @@ const AddPet = ({ isAddPetOpen, setIsAddPetOpen }) => {
 
 	const addPet = async newPet => {
 		const pet = new Pet(newPet.name, user.uid, user.username, newPet.age, newPet.breed, newPet.gender, newPet.info)
+		console.log(pet)
 		pet.photoURL = downloadURL
 		const location = await Geolocation.getCurrentPosition()
 		pet.lat = location.coords.latitude

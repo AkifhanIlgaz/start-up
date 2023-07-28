@@ -8,7 +8,7 @@ firebase.initializeApp(firebaseConfig)
 
 export const MatchRequestCollection = 'matchRequests'
 export const PetsCollection = 'pets'
-export const UsersCollection = UsersCollection
+export const UsersCollection = 'users'
 
 export class MatchRequest {
 	constructor(from, fromPhoto, to, toPhoto, status, id) {

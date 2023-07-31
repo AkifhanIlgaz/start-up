@@ -1,6 +1,6 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon } from '@ionic/react'
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon, IonToast } from '@ionic/react'
 import { heartOutline } from 'ionicons/icons'
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import { useRecoilState } from 'recoil'
 import Request, { MatchRequest } from '../api/request'
@@ -9,6 +9,8 @@ import userState from '../atoms/user'
 const PetCard = ({ pet }) => {
 	const history = useHistory()
 	const [user] = useRecoilState(userState)
+	const [isToastOpen, setIsToastOpen] = useState(false)
+	const [toastMessage, setToastMessage] = useState('Request is successfully sent!')
 
 	const goProfile = userId => {
 		history.push(`/users/${userId}`)
@@ -24,7 +26,7 @@ const PetCard = ({ pet }) => {
 			matchRequest.id = res.id
 			await req.setDocument('matchRequests', res.id, { ...matchRequest })
 		} catch (error) {
-			console.log(error)
+			throw error
 		}
 	}
 
@@ -41,10 +43,22 @@ const PetCard = ({ pet }) => {
 					}}
 				>
 					<span>{pet.name}</span>
-					<IonButton color={'danger'} size="small" onClick={sendMatchRequest}>
-						Send Request
+					<IonButton
+						id="send-match-request"
+						color={'danger'}
+						size="small"
+						onClick={() => {
+							sendMatchRequest()
+								.then(() => setIsToastOpen(true))
+								.catch(err => {
+									console.log(err)
+									setToastMessage('Error occurred when sending match request')
+								})
+						}}
+					>
 						<IonIcon icon={heartOutline}></IonIcon>
 					</IonButton>
+					<IonToast color={toastMessage === 'Request is successfully sent!' ? 'success' : 'danger'} position="top" isOpen={isToastOpen} message={toastMessage} onDidDismiss={() => setIsToastOpen(false)} duration={2000}></IonToast>
 				</IonCardTitle>
 				<IonCardSubtitle>
 					<span onClick={() => goProfile(pet.ownerId)}>{pet.ownerName}</span>

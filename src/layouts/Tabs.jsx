@@ -14,7 +14,7 @@ const Tabs = () => {
 	const [user, setUser] = useRecoilState(userState)
 	return (
 		user && (
-			<IonContent color={'tertiary'}>
+			<IonContent color={'background'}>
 				<IonTabs>
 					<IonRouterOutlet>
 						<Route path="/home" render={() => <Home />} exact={true} />

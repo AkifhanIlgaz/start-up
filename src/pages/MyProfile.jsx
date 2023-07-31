@@ -1,4 +1,4 @@
-import { IonButton, IonFab, IonFabButton, IonFabList, IonIcon, IonInput, IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
+import { IonFab, IonFabButton, IonFabList, IonIcon, IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
 import { addOutline, logOutOutline, pencilOutline, settingsOutline, trashOutline } from 'ionicons/icons'
 import { useRef, useState } from 'react'
 import { useHistory } from 'react-router'
@@ -20,7 +20,6 @@ export const MyProfile = () => {
 	const [lastSegment, setLastSegment] = useState('pets')
 	const [isAddPetOpen, setIsAddPetOpen] = useState(false)
 	const [loading, setLoading] = useState(false)
-	const [isEnabled, setIsEnabled] = useState(false)
 
 	const upload = useRef()
 
@@ -78,24 +77,7 @@ export const MyProfile = () => {
 	return (
 		<Authorized>
 			<div className="ion-padding-top">
-				<div className="ion-text-center ion-margin-bottom">
-					{!isEnabled ? (
-						<div className="ion-padding">
-							<span>{user.username}</span>
-							<IonButton slot="end" color={'transparent'}>
-								<IonIcon icon={pencilOutline}></IonIcon>
-							</IonButton>
-						</div>
-					) : (
-						<div>
-							<IonInput value={user.username} type="text" color={'warning'}></IonInput>
-							<IonButton>
-								<IonIcon icon={pencilOutline}></IonIcon>
-							</IonButton>
-						</div>
-					)}
-				</div>
-
+				<div className="ion-text-center ion-margin-bottom">{user.username}</div>
 				<div
 					className=" ion-text-center ion-margin-bottom"
 					style={{
@@ -125,7 +107,6 @@ export const MyProfile = () => {
 						</IonFabButton>
 					</IonFab>
 				</div>
-
 				<div className="ion-margin-bottom">
 					<IonToolbar color={'transparent'} className="ion-no-margin">
 						<IonSegment value={lastSegment} onIonChange={e => setLastSegment(e.detail.value)}>
@@ -140,7 +121,6 @@ export const MyProfile = () => {
 				</div>
 				{lastSegment == 'pets' ? <MyPets user={user} /> : <div>History</div>}
 				<AddPet isAddPetOpen={isAddPetOpen} setIsAddPetOpen={setIsAddPetOpen} />
-
 				<IonFab slot="fixed" vertical="bottom" horizontal="start">
 					<IonFabButton onClick={() => setIsAddPetOpen(true)}>
 						<IonIcon icon={addOutline}></IonIcon>

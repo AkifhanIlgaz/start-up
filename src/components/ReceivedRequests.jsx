@@ -36,7 +36,7 @@ const ReceivedRequests = () => {
 						<IonItem>
 							<IonChip>
 								<IonAvatar slot="start">
-									<img src={request.to.photoURL} alt="" />
+									<img src={request.from.photo} alt="" />
 								</IonAvatar>
 								<IonLabel>Pet name</IonLabel>
 							</IonChip>

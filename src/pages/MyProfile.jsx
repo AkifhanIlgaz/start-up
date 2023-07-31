@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCol, IonFab, IonFabButton, IonFabList, IonIcon, IonLabel, IonRow, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
+import { IonButton, IonFab, IonFabButton, IonFabList, IonIcon, IonInput, IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
 import { addOutline, logOutOutline, pencilOutline, settingsOutline, trashOutline } from 'ionicons/icons'
 import { useRef, useState } from 'react'
 import { useHistory } from 'react-router'
@@ -6,7 +6,6 @@ import { useRecoilState } from 'recoil'
 import Request, { MatchRequestCollection, PetsCollection, UsersCollection } from '../api/request'
 import { userState } from '../atoms/user'
 import AddPet from '../components/AddPet'
-import EditProfile from '../components/EditProfile'
 import MyPets from '../components/MyPets'
 import Authorized from '../layouts/Authorized'
 
@@ -20,8 +19,8 @@ export const MyProfile = () => {
 	const [downloadURL, setDownloadURL] = useState(null)
 	const [lastSegment, setLastSegment] = useState('pets')
 	const [isAddPetOpen, setIsAddPetOpen] = useState(false)
-	const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
 	const [loading, setLoading] = useState(false)
+	const [isEnabled, setIsEnabled] = useState(false)
 
 	const upload = useRef()
 
@@ -80,8 +79,23 @@ export const MyProfile = () => {
 		<Authorized>
 			<div className="ion-padding-top">
 				<div className="ion-text-center ion-margin-bottom">
-					<span>{user.username}</span>
+					{!isEnabled ? (
+						<div className="ion-padding">
+							<span>{user.username}</span>
+							<IonButton slot="end" color={'transparent'}>
+								<IonIcon icon={pencilOutline}></IonIcon>
+							</IonButton>
+						</div>
+					) : (
+						<div>
+							<IonInput value={user.username} type="text" color={'warning'}></IonInput>
+							<IonButton>
+								<IonIcon icon={pencilOutline}></IonIcon>
+							</IonButton>
+						</div>
+					)}
 				</div>
+
 				<div
 					className=" ion-text-center ion-margin-bottom"
 					style={{
@@ -100,13 +114,16 @@ export const MyProfile = () => {
 								bottom: '1%',
 								margin: 'auto'
 							}}
-							onClick={() => setIsEditProfileOpen(true)}
+							onClick={() => click()}
 						>
 							<IonIcon icon={pencilOutline}></IonIcon>
+
+							<div hidden={true}>
+								Fotoğraf Yükle
+								<input type="file" onChange={handleFileUpload} ref={upload} style={{ display: 'none' }} />
+							</div>
 						</IonFabButton>
 					</IonFab>
-
-					<EditProfile isEditProfileOpen={isEditProfileOpen} setIsEditProfileOpen={setIsEditProfileOpen}></EditProfile>
 				</div>
 
 				<div className="ion-margin-bottom">
@@ -123,33 +140,6 @@ export const MyProfile = () => {
 				</div>
 				{lastSegment == 'pets' ? <MyPets user={user} /> : <div>History</div>}
 				<AddPet isAddPetOpen={isAddPetOpen} setIsAddPetOpen={setIsAddPetOpen} />
-				<IonCard>
-					<IonCardContent>
-						{!downloadURL && (
-							<IonRow className="ion-align-items-center">
-								<IonCol className="ion-no-padding">
-									{!loading && (
-										<div onClick={() => click()}>
-											<div>
-												Fotoğraf Yükle
-												<input type="file" onChange={handleFileUpload} ref={upload} style={{ display: 'none' }} />
-											</div>
-										</div>
-									)}
-									{loading && <div>Fotoğraf Yükleniyor...</div>}
-								</IonCol>
-							</IonRow>
-						)}
-						{downloadURL && (
-							<IonRow>
-								<IonCol className="auth-card">
-									<IonLabel color="success">Yüklendi!</IonLabel>
-									<img src={downloadURL} alt="" style={{ width: '50px' }} />
-								</IonCol>
-							</IonRow>
-						)}
-					</IonCardContent>
-				</IonCard>
 
 				<IonFab slot="fixed" vertical="bottom" horizontal="start">
 					<IonFabButton onClick={() => setIsAddPetOpen(true)}>

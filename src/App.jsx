@@ -40,11 +40,9 @@ const App = () => {
 				<IonReactRouter>
 					<IonRouterOutlet>
 						{user ? (
-							<>
-								<Route path={['/', '/signin', '/signup', '/password-reset']} exact={true}>
-									<Redirect to="/home"></Redirect>
-								</Route>
-							</>
+							<Route path={['/', '/signin', '/signup', '/password-reset']} exact={true}>
+								<Redirect to="/home"></Redirect>
+							</Route>
 						) : (
 							<>
 								<Route path="/">

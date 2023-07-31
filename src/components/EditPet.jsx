@@ -41,6 +41,7 @@ const EditPet = ({ isEditPetOpen, setIsEditPetOpen, currentPet, pets, setPets })
 
 	const editPet = async data => {
 		data = { ...data, ...pet }
+		conso	
 		await req.setDocument(PetsCollection, pet.id, data)
 		pets[pets.findIndex(p => p.id === pet.id)] = data
 		setPets(pets)
@@ -88,7 +89,15 @@ const EditPet = ({ isEditPetOpen, setIsEditPetOpen, currentPet, pets, setPets })
 							)}
 						</IonItem>
 						<IonItem>
-							<IonInput value={pet.name} type="text" {...register('name', { required: true, value: pet.name })} onIonInput={e => setPet({ ...pet, name: e.detail.value })}></IonInput>
+							<IonInput
+								value={pet.name}
+								type="text"
+								{...register('name', { required: true, value: pet.name })}
+								onIonInput={e => {
+									console.log({ ...pet, name: e.detail.value })
+									setPet({ ...pet, name: e.detail.value })
+								}}
+							></IonInput>
 						</IonItem>
 						<IonItem>
 							<IonLabel

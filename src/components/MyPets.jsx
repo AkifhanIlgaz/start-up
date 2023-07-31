@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAvatar, IonButton, IonButtons, IonHeader, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonModal, IonTitle, IonToolbar } from '@ionic/react'
 import { information, pencil, trash } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
@@ -57,13 +57,7 @@ const MyPets = () => {
 											</IonButtons>
 										</IonToolbar>
 									</IonHeader>
-									<IonGrid className="ion-align-items-center ion-justify-content-center ion-height">
-										<IonRow className="ion-align-items-center ion-justify-content-center ion-height ">
-											<IonCol size="12" size-md="6" size-lg="4">
-												<PetCard pet={pet} />
-											</IonCol>
-										</IonRow>
-									</IonGrid>
+									<PetCard pet={pet} />
 								</IonModal>
 							</IonItemOption>
 							<IonItemOption color={'warning'}>

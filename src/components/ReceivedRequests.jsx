@@ -1,4 +1,4 @@
-import { IonAvatar, IonChip, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList } from '@ionic/react'
+import { IonAvatar, IonChip, IonCol, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonRow } from '@ionic/react'
 import { checkmarkOutline, closeOutline, heart } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
@@ -28,12 +28,16 @@ const ReceivedRequests = () => {
 		fetchData()
 	}, [requests])
 
-	return (
-		<IonList lines="full">
-			{requests.map(request => {
-				return (
-					<IonItemSliding key={request.id} className="ion-padding-horizontal">
-						<IonItem>
+	return requests.map(request => {
+		return (
+			<IonRow key={request.id}>
+				<IonCol className="ion-no-padding">
+					<IonItemSliding className="ion-margin-bottom">
+						<IonItem
+							style={{
+								borderRadius: '10px'
+							}}
+						>
 							<IonChip>
 								<IonAvatar slot="start">
 									<img src={request.from.photo} alt="" />
@@ -58,10 +62,10 @@ const ReceivedRequests = () => {
 							</IonItemOption>
 						</IonItemOptions>
 					</IonItemSliding>
-				)
-			})}
-		</IonList>
-	)
+				</IonCol>
+			</IonRow>
+		)
+	})
 }
 
 export default ReceivedRequests

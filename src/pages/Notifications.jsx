@@ -8,7 +8,7 @@ const Notifications = () => {
 	const [segment, setSegment] = useState('sent')
 	return (
 		<Authorized>
-			<IonToolbar className="ion-no-padding" color={'tertiary'}>
+			<IonToolbar className="ion-no-padding" color={'background'}>
 				<IonSegment value={segment} onIonChange={e => setSegment(e.detail.value)}>
 					<IonSegmentButton value={'sent'}>
 						<IonLabel>Sent</IonLabel>
@@ -18,7 +18,7 @@ const Notifications = () => {
 					</IonSegmentButton>
 				</IonSegment>
 			</IonToolbar>
-			<IonContent color="tertiary" className="ion-no-padding">
+			<IonContent color="background" className="ion-no-padding">
 				<IonGrid className="ion-align-items ion-justify-content-center ion-height ">
 					<IonRow className="ion-justify-content-center ion-height">
 						<IonCol size="12" size-md="6" size-lg="4">

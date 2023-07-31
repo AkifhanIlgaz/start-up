@@ -1,4 +1,4 @@
-import { IonAvatar, IonChip, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList } from '@ionic/react'
+import { IonAvatar, IonChip, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList } from '@ionic/react'
 import { heart, trash } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
@@ -28,19 +28,24 @@ const SentRequests = () => {
 	}, [requests])
 
 	return (
-		<IonList>
+		<IonList lines="full">
 			{requests.map(request => {
 				return (
-					<IonItemSliding key={request.id}>
+					<IonItemSliding key={request.id} className="ion-padding-horizontal">
 						<IonItem>
-							<IonAvatar slot="start">
-								<img src={request.from.photo} alt="" />
-							</IonAvatar>
-							<IonIcon icon={heart}></IonIcon>
-							<IonAvatar>
-								<img src={request.to.photo} alt="" />
-							</IonAvatar>
-							<IonChip color="warning">{request.status}</IonChip>
+							<IonChip>
+								<IonAvatar>
+									<img src={request.from.photo} alt="" />
+								</IonAvatar>
+								<IonLabel>Pet name</IonLabel>
+							</IonChip>
+							<IonIcon icon={heart} className="ion-padding-start ion-padding-end" color="danger" size="large"></IonIcon>
+							<IonChip>
+								<IonAvatar>
+									<img src={request.to.photo} alt="" />
+								</IonAvatar>
+								<IonLabel>Pet Name</IonLabel>
+							</IonChip>
 						</IonItem>
 						<IonItemOptions side="end">
 							<IonItemOption color={'danger'}>

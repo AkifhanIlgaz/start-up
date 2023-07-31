@@ -80,7 +80,7 @@ export const SignUp = () => {
 				</IonButton>
 				<IonRow className="ion-text-center">
 					<IonCol>
-						<a onClick={goSignIn} style={{ textDecoration: 'none', color: '-moz-initial', fontSize: '12px' }}>
+						<a onClick={goSignIn} style={{ textDecoration: 'none', color: 'white', fontSize: '12px' }}>
 							{formatMessage('Already have an account?')}
 						</a>
 					</IonCol>

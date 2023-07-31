@@ -88,10 +88,10 @@ export const SignIn = () => {
 
 				<IonRow>
 					<IonCol>
-						<a className="ion-float-left " onClick={goPasswordReset} style={{ textDecoration: 'none', color: '-moz-initial', fontSize: '12px' }}>
+						<a className="ion-float-left " onClick={goPasswordReset} style={{ textDecoration: 'none', color: 'white', fontSize: '12px' }}>
 							{formatMessage('Forgot your password ?')}
 						</a>
-						<a className="ion-float-right" onClick={goSignup} style={{ textDecoration: 'none', color: '-moz-initial', fontSize: '12px' }}>
+						<a className="ion-float-right" onClick={goSignup} style={{ textDecoration: 'none', color: 'white', fontSize: '12px' }}>
 							{formatMessage("Don't have an account ?")}
 						</a>
 					</IonCol>

@@ -45,7 +45,7 @@
 
 .card-content {
 	padding: 10px;
-	background-color: var(--ion-color-success);
+	background-color: var(--ion-color-tertiary);
 }
 
 .image {
@@ -56,4 +56,9 @@
 
 .place-holder {
 	color: #a9a9a9;
+}
+
+.logo {
+	font-family: 'Pacifico', cursive;
+	font-size: large;
 }

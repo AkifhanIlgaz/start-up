@@ -42,20 +42,31 @@ export const Search = () => {
 					title: 'Me'
 				},
 				...pets.map(pet => {
-					return {
-						coordinate: {
-							lat: pet.lat,
-							lng: pet.long
-						},
+					const infoWindow = new google.maps.InfoWindow()
+					const marker = new google.maps.Marker({
+						position: new google.maps.LatLng({ lat: pet.lat, lng: pet.lng }),
+						map: newMap,
 						title: pet.name
-					}
+					})
+
+					marker.addListener('click', () => {
+						infoWindow.open({
+							anchor: marker,
+							map: newMap
+						})
+					})
+					return marker
 				})
 			]
 
 			// TODO => Pop up info window on click marker
-			newMap.addMarkers(markers)
-			await newMap.setOnMarkerClickListener(e => {
-				console.log(e.title)
+			await newMap.addMarkers(markers)
+			await newMap.setOnMarkerClickListener(marker => {
+				const infoWindow = new google.maps.InfoWindow({})
+				infoWindow.open({
+					map: newMap,
+					anchor: marker
+				})
 			})
 		}
 		loadMap()
@@ -67,7 +78,7 @@ export const Search = () => {
 				ref={mapRef}
 				style={{
 					display: 'inline-block',
-					width: '100%',
+					width: '100vh',
 					height: '100vh'
 				}}
 			></capacitor-google-map>

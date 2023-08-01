@@ -1,6 +1,6 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonIcon, IonToast } from '@ionic/react'
 import { heartOutline } from 'ionicons/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import { useRecoilState } from 'recoil'
 import Request, { MatchRequest, MatchRequestCollection } from '../api/request'
@@ -28,6 +28,8 @@ const PetCard = ({ pet }) => {
 			throw error
 		}
 	}
+
+	useEffect(() => {}, [toastMessage])
 
 	// Assume that every user only has one pet
 	const sendMatchRequest = async () => {
@@ -89,14 +91,14 @@ const PetCard = ({ pet }) => {
 										role: 'cancel',
 										handler: () => {
 											setIsToastOpen(false)
-											setToastMessage('Request is deleted')
+
 											setIsDismissToastOpen(true)
 											deleteMatchRequest()
 										}
 									}
 								]}
 							></IonToast>
-							<IonToast color={toastMessage === 'Request is successfully sent!' ? 'success' : 'danger'} isOpen={isDismissToastOpen} message={toastMessage + 'zoz'} duration={1000} position="top"></IonToast>
+							<IonToast color={'danger'} isOpen={isDismissToastOpen} message={'Request is deleted'} duration={1000} position="top"></IonToast>
 						</>
 					)}
 				</IonCardTitle>

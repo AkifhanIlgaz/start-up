@@ -11,7 +11,7 @@ const PetCard = ({ pet }) => {
 	const [user] = useRecoilState(userState)
 	const [isToastOpen, setIsToastOpen] = useState(false)
 	const [isDismissToastOpen, setIsDismissToastOpen] = useState(false)
-	const [toastMessage, setToastMessage] = useState('')
+	const [toastMessage, setToastMessage] = useState('Request is successfully sent!')
 	const req = new Request()
 
 	const goProfile = userId => {
@@ -84,16 +84,14 @@ const PetCard = ({ pet }) => {
 								trigger="send-match-request"
 								message={toastMessage}
 								isOpen={isToastOpen}
-								duration={2000}
+								duration={1500}
 								buttons={[
 									{
 										text: 'Dismiss',
 										role: 'cancel',
 										handler: () => {
 											setIsToastOpen(false)
-
-											setIsDismissToastOpen(true)
-											deleteMatchRequest()
+											deleteMatchRequest().then(() => setIsDismissToastOpen(true))
 										}
 									}
 								]}

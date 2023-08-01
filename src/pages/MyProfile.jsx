@@ -1,5 +1,5 @@
-import { IonFab, IonFabButton, IonFabList, IonIcon, IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
-import { addOutline, logOutOutline, pencilOutline, settingsOutline, trashOutline } from 'ionicons/icons'
+import { IonButton, IonFab, IonFabButton, IonFabList, IonIcon, IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/react'
+import { addOutline, logOutOutline, pencilOutline, settingsOutline, shield, trashOutline } from 'ionicons/icons'
 import { useRef, useState } from 'react'
 import { useHistory } from 'react-router'
 import { useRecoilState } from 'recoil'
@@ -23,11 +23,41 @@ export const MyProfile = () => {
 
 	const upload = useRef()
 
-	const handleFileUpload = async e => {
+	const handleVerifyUpload = async e => {
+		const file = e.target.files[0]
+		try {
+			const verifyUrl = await req.upload(user.uid, file)
+			await req.setDocument(UsersCollection, user.uid, {
+				...user,
+				verified: false,
+				verifyPhoto: verifyUrl
+			})
+			setUser({
+				...user,
+				verified: false,
+				verifyPhoto: verifyUrl
+			})
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	const verify = async () => {
+		await req.updateDocument(UsersCollection, user.uid, {
+			verified: true
+		})
+
+		setUser({
+			...user,
+			verified: true
+		})
+	}
+
+	const handleUpload = async e => {
 		const file = e.target.files[0]
 		try {
 			setLoading(true)
-			const downloadURL = await req.uploadFile(user.uid, file)
+			const downloadURL = await req.upload(user.uid)
 			await req.setDocument(UsersCollection, user.uid, { ...user, photoURL: downloadURL })
 			setDownloadURL(downloadURL)
 			setUser({
@@ -102,7 +132,7 @@ export const MyProfile = () => {
 
 							<div hidden={true}>
 								Fotoğraf Yükle
-								<input type="file" onChange={handleFileUpload} ref={upload} style={{ display: 'none' }} />
+								<input type="" onChange={handleUpload} ref={upload} style={{ display: 'none' }} />
 							</div>
 						</IonFabButton>
 					</IonFab>
@@ -121,11 +151,13 @@ export const MyProfile = () => {
 				</div>
 				{lastSegment == 'pets' ? <MyPets user={user} /> : <div>History</div>}
 				<AddPet isAddPetOpen={isAddPetOpen} setIsAddPetOpen={setIsAddPetOpen} />
+
 				<IonFab slot="fixed" vertical="bottom" horizontal="start">
 					<IonFabButton onClick={() => setIsAddPetOpen(true)}>
 						<IonIcon icon={addOutline}></IonIcon>
 					</IonFabButton>
 				</IonFab>
+
 				<IonFab slot="fixed" vertical="bottom" horizontal="end">
 					<IonFabButton>
 						<IonIcon icon={settingsOutline}></IonIcon>
@@ -139,6 +171,16 @@ export const MyProfile = () => {
 						</IonFabButton>
 					</IonFabList>
 				</IonFab>
+
+				<IonButton onClick={() => click()} color={user.verified ? 'primary' : 'danger'}>
+					<IonIcon icon={shield} color={user.verified ? 'white' : 'success'}></IonIcon>
+					<div hidden={true}>
+						Fotoğraf Yükle
+						<input type="" onChange={handleVerifyUpload} ref={upload} style={{ display: 'none' }} />
+					</div>
+				</IonButton>
+
+				<IonButton onClick={verify}>Verify</IonButton>
 			</div>
 		</Authorized>
 	)

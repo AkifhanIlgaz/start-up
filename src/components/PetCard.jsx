@@ -3,24 +3,35 @@ import { heartOutline } from 'ionicons/icons'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import { useRecoilState } from 'recoil'
-import Request, { MatchRequest } from '../api/request'
+import Request, { MatchRequest, MatchRequestCollection } from '../api/request'
 import userState from '../atoms/user'
 
 const PetCard = ({ pet }) => {
 	const history = useHistory()
 	const [user] = useRecoilState(userState)
 	const [isToastOpen, setIsToastOpen] = useState(false)
-	const [toastMessage, setToastMessage] = useState('Request is successfully sent!')
+	const [isDismissToastOpen, setIsDismissToastOpen] = useState(false)
+	const [toastMessage, setToastMessage] = useState('')
+	const req = new Request()
 
 	const goProfile = userId => {
 		history.push(`/users/${userId}`)
 	}
 
-	// TODO : Open a modal when user wants to send match request to select which pet will be used for request
-	// For now, assume that every user only has one pet
+	const deleteMatchRequest = async data => {
+		try {
+			const snapshot = await req.firestore.collection(MatchRequestCollection).where('from.ownerId', '==', user.uid).where('to.ownerId', '==', pet.ownerId).get()
+			snapshot.forEach(async matchRequest => {
+				await req.deleteDocument(MatchRequestCollection, matchRequest.id)
+			})
+		} catch (error) {
+			throw error
+		}
+	}
+
+	// Assume that every user only has one pet
 	const sendMatchRequest = async () => {
 		try {
-			const req = new Request()
 			const matchRequest = new MatchRequest(user.uid, user.photoURL, pet.ownerId, pet.photoURL, 'pending', '')
 			const res = await req.addDocument('matchRequests', { ...matchRequest })
 			matchRequest.id = res.id
@@ -51,16 +62,41 @@ const PetCard = ({ pet }) => {
 								size="small"
 								onClick={() => {
 									sendMatchRequest()
-										.then(() => setIsToastOpen(true))
-										.catch(err => {
-											console.log(err)
+										.then(() => {
+											setToastMessage('Request is successfully sent!')
+										})
+										.catch(() => {
 											setToastMessage('Error occurred when sending match request')
+										})
+										.finally(() => {
+											isDismissToastOpen && setIsDismissToastOpen(false)
+											setIsToastOpen(true)
 										})
 								}}
 							>
 								<IonIcon icon={heartOutline}></IonIcon>
 							</IonButton>
-							<IonToast color={toastMessage === 'Request is successfully sent!' ? 'success' : 'danger'} position="top" isOpen={isToastOpen} message={toastMessage} onDidDismiss={() => setIsToastOpen(false)} duration={2000}></IonToast>
+							<IonToast
+								color={toastMessage === 'Request is successfully sent!' ? 'success' : 'danger'}
+								position="top"
+								trigger="send-match-request"
+								message={toastMessage}
+								isOpen={isToastOpen}
+								duration={2000}
+								buttons={[
+									{
+										text: 'Dismiss',
+										role: 'cancel',
+										handler: () => {
+											setIsToastOpen(false)
+											setToastMessage('Request is deleted')
+											setIsDismissToastOpen(true)
+											deleteMatchRequest()
+										}
+									}
+								]}
+							></IonToast>
+							<IonToast color={toastMessage === 'Request is successfully sent!' ? 'success' : 'danger'} isOpen={isDismissToastOpen} message={toastMessage + 'zoz'} duration={1000} position="top"></IonToast>
 						</>
 					)}
 				</IonCardTitle>

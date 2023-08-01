@@ -43,22 +43,26 @@ const PetCard = ({ pet }) => {
 					}}
 				>
 					<span>{pet.name}</span>
-					<IonButton
-						id="send-match-request"
-						color={'danger'}
-						size="small"
-						onClick={() => {
-							sendMatchRequest()
-								.then(() => setIsToastOpen(true))
-								.catch(err => {
-									console.log(err)
-									setToastMessage('Error occurred when sending match request')
-								})
-						}}
-					>
-						<IonIcon icon={heartOutline}></IonIcon>
-					</IonButton>
-					<IonToast color={toastMessage === 'Request is successfully sent!' ? 'success' : 'danger'} position="top" isOpen={isToastOpen} message={toastMessage} onDidDismiss={() => setIsToastOpen(false)} duration={2000}></IonToast>
+					{pet.ownerId !== user.uid && (
+						<>
+							<IonButton
+								id="send-match-request"
+								color={'danger'}
+								size="small"
+								onClick={() => {
+									sendMatchRequest()
+										.then(() => setIsToastOpen(true))
+										.catch(err => {
+											console.log(err)
+											setToastMessage('Error occurred when sending match request')
+										})
+								}}
+							>
+								<IonIcon icon={heartOutline}></IonIcon>
+							</IonButton>
+							<IonToast color={toastMessage === 'Request is successfully sent!' ? 'success' : 'danger'} position="top" isOpen={isToastOpen} message={toastMessage} onDidDismiss={() => setIsToastOpen(false)} duration={2000}></IonToast>
+						</>
+					)}
 				</IonCardTitle>
 				<IonCardSubtitle>
 					<span onClick={() => goProfile(pet.ownerId)}>{pet.ownerName}</span>

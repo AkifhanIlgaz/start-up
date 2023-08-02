@@ -22,11 +22,12 @@ export const MyProfile = () => {
 	const [loading, setLoading] = useState(false)
 
 	const upload = useRef()
+	const verifyUpload = useRef()
 
 	const handleVerifyUpload = async e => {
 		const file = e.target.files[0]
 		try {
-			const verifyUrl = await req.upload(user.uid, file)
+			const verifyUrl = await req.uploadFile(user.uid, file)
 			await req.setDocument(UsersCollection, user.uid, {
 				...user,
 				verified: false,
@@ -57,7 +58,8 @@ export const MyProfile = () => {
 		const file = e.target.files[0]
 		try {
 			setLoading(true)
-			const downloadURL = await req.upload(user.uid)
+			const downloadURL = await req.uploadFile(user.uid, file)
+			console.log(downloadURL)
 			await req.setDocument(UsersCollection, user.uid, { ...user, photoURL: downloadURL })
 			setDownloadURL(downloadURL)
 			setUser({
@@ -72,6 +74,10 @@ export const MyProfile = () => {
 
 	const click = () => {
 		upload.current.click()
+	}
+
+	const verifyClick = () => {
+		verifyUpload.current.click()
 	}
 
 	const signOut = async () => {
@@ -132,7 +138,7 @@ export const MyProfile = () => {
 
 							<div hidden={true}>
 								Fotoğraf Yükle
-								<input type="" onChange={handleUpload} ref={upload} style={{ display: 'none' }} />
+								<input type="file" onChange={handleUpload} ref={upload} style={{ display: 'none' }} />
 							</div>
 						</IonFabButton>
 					</IonFab>
@@ -172,11 +178,11 @@ export const MyProfile = () => {
 					</IonFabList>
 				</IonFab>
 
-				<IonButton onClick={() => click()} color={user.verified ? 'primary' : 'danger'}>
+				<IonButton onClick={() => verifyClick()} color={user.verified ? 'primary' : 'danger'}>
 					<IonIcon icon={shield} color={user.verified ? 'white' : 'success'}></IonIcon>
 					<div hidden={true}>
 						Fotoğraf Yükle
-						<input type="" onChange={handleVerifyUpload} ref={upload} style={{ display: 'none' }} />
+						<input type="file" onChange={handleVerifyUpload} ref={verifyUpload} />
 					</div>
 				</IonButton>
 

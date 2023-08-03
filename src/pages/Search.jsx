@@ -41,32 +41,20 @@ export const Search = () => {
 					},
 					title: 'Me'
 				},
-				...pets.map(pet => {
-					const infoWindow = new google.maps.InfoWindow()
-					const marker = new google.maps.Marker({
-						position: new google.maps.LatLng({ lat: pet.lat, lng: pet.lng }),
-						map: newMap,
-						title: pet.name
-					})
 
-					marker.addListener('click', () => {
-						infoWindow.open({
-							anchor: marker,
-							map: newMap
-						})
-					})
-					return marker
-				})
+				...pets.map(pet => ({
+					coordinate: {
+						lat: pet.lat,
+						lng: pet.long
+					},
+					title: pet.name
+				}))
 			]
 
 			// TODO => Pop up info window on click marker
 			await newMap.addMarkers(markers)
 			await newMap.setOnMarkerClickListener(marker => {
-				const infoWindow = new google.maps.InfoWindow({})
-				infoWindow.open({
-					map: newMap,
-					anchor: marker
-				})
+				console.log(marker.title)
 			})
 		}
 		loadMap()

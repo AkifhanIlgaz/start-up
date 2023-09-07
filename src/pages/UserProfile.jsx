@@ -9,7 +9,6 @@ const defaultImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtMHF
 
 export const UserProfile = () => {
 	let { id } = useParams()
-
 	const [user, setUser] = useState({})
 
 	useEffect(() => {
